@@ -1,3 +1,14 @@
+body {
+  font-family: "Varela Round", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #7f7f7f;
+  background: #fff;
+  height: 100%;
+  position: relative;
+}
+
 .App {
   text-align: center;
 }

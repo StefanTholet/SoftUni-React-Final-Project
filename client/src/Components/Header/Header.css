@@ -1,0 +1,16 @@
+.header-nav {
+    position: absolute;
+    z-index: 1001;
+    width: 100%;
+    margin: 0px 0 0 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0.7;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 200px;
+}
