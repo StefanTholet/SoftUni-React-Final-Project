@@ -5,7 +5,7 @@ const NavUL = () => {
         <ul>
  <li>
      <h3>
-         <a href="book" class="active">BOOK NOW</a>
+         <a href="book" className="active">BOOK NOW</a>
      </h3>
  </li>
  <li>

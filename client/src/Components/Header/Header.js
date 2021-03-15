@@ -1,12 +1,12 @@
 import './Header.css';
 import './HotelName/HotelName';
 import HotelName from './HotelName/HotelName';
-import Nav from './Nav/Nav'
+import Nav from './Nav/Nav';
+
 const Header = () => {
-    console.log(HotelName)
     return (
         <header className="header-nav">
-		<div class="nav-container">
+		<div className="nav-container">
             <HotelName />
 			<Nav></Nav>
 		</div>

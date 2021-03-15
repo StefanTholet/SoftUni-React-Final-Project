@@ -1,9 +1,9 @@
 import './HotelName.css'
 const HotelName = () => {
     return (
-        <div class="nav-row">
+        <div className="nav-row">
         <h1>
-            <a class="hotel-title" href="home">Hotel Horizont</a>
+            <a className="hotel-title" href="home">Hotel Horizont</a>
             </h1>
         </div>
     );
