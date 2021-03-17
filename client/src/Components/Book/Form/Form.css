@@ -21,3 +21,13 @@
 .booking-form label {
     padding-right: 10px;
 }
+
+.submit-booking {
+    width: 20%;
+    background:white;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 5px 0;
+    border-radius: 5px;
+    border-color: white;
+}

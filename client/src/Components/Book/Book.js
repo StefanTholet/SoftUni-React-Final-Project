@@ -2,15 +2,16 @@ import HeroImage from '../HeroImage/HeroImage';
 import Form from './Form/Form';
 
 import './Book.css';
+
 import { today } from './bookService';
+import {reservation} from './bookService'
 const Book = (
     { image }
 ) => {
-    console.log(today)
     return (
         <>
             <HeroImage image={image}>
-               <Form today={today}/>
+               <Form reservation={reservation} today={today}/>
             </HeroImage>
 
         </>

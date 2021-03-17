@@ -1,22 +1,22 @@
 import './NavUL.css';
-
+import { NavLink } from 'react-router-dom';
 const NavUL = () => {
     return (
         <ul>
- <li>
-         <a href="/book" className="active">BOOK NOW</a>
- </li>
- <li>
-     <a href="services.html">Amenities</a>
- </li>
- <li>
-     <a href="about.html">About Us</a>
- </li>
- <li>
-     <a href="contact.html">Contact</a>
- </li>
-</ul>
+            <li>
+                <NavLink to="/book" exact activeClassName="active">BOOK NOW</NavLink>
+            </li>
+            <li>
+                <NavLink to="/services" activeClassName="active">Amenities</NavLink>
+            </li>
+            <li>
+                <NavLink to="/about" activeClassName="active">About Us</NavLink>
+            </li>
+            <li>
+                <NavLink to="/contact" activeClassName="active">Contact</NavLink>
+            </li>
+        </ul>
     );
 }
- 
+
 export default NavUL;

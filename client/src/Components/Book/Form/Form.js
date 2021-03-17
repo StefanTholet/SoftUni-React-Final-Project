@@ -1,37 +1,33 @@
 import './Form.css'
-
+import { adultsOptions, childrenOptions, roomOptions } from './formService';
+import { useState } from 'react';
 const Form = (props) => {
-    let count = 0;
-    const adultsOptions = Array(30).fill(null).map((option) => <option value={count}>{count += 1}</option>);
-    count = 0;
-    const childrenOptions = Array(10).fill(null).map((option) => <option value={count}>{count += 1}</option>);
-    count = 0;
-    const roomOptions = Array(30).fill(null).map((option) => <option value={count}>{count += 1}</option>);
-    return(
+
+    return (
         <div className="form-wrapper">
-        <div className="form-parent">
-            <form action="" className="booking-form">
-                <label htmlFor="check-in">Check-in date</label>
-                <input type="date" name="check-in"  value={props.today} />
-                <label htmlFor="Check-out">Check-out date</label>
-                <input type="date" name="Check-out" id="" />
-                <label htmlFor="group-adults">Adults</label>
-                <select name="group-adults" id="">
-                    {adultsOptions}
-                </select>
-                <label htmlFor="group-children">Children</label>
-                <select name="group-children" id="">
-                    <option value="" selected>No children</option>
-                    {childrenOptions}
-                </select>
-                <label htmlFor="group-adults">Rooms</label>
-                <select name="rooms" id="">
-                    {roomOptions}
-                </select>
-                <input className="submit-booking" type="submit" value="Book"/>
-            </form>
+            <div className="form-parent">
+                <form action="" className="booking-form" onSubmit={(event) => props.reservation(event)}>
+                    <label htmlFor="check-in">Check-in date</label>
+                    <input type="date" name="check-in" />
+                    <label htmlFor="Check-out">Check-out date</label>
+                    <input type="date" name="Check-out" id="" />
+                    <label htmlFor="adults">Adults</label>
+                    <select name="adults" id="">
+                        {adultsOptions}
+                    </select>
+                    <label htmlFor="children">Children</label>
+                    <select name="children" id="">
+                        <option value="No children" >No children</option>
+                        {childrenOptions}
+                    </select>
+                    <label htmlFor="room">Rooms</label>
+                    <select name="rooms" id="">
+                        {roomOptions}
+                    </select>
+                    <input className="submit-booking" type="submit" value="Book" />
+                </form>
+            </div>
         </div>
-       </div>
     );
 }
 

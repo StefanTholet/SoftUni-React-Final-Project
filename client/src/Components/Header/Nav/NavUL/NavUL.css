@@ -20,3 +20,8 @@ a {
     color: white;
     text-align: center;  
 }
+
+.active {
+    background-color: white;
+    color: black;
+}
