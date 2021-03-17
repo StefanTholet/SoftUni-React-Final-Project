@@ -6,7 +6,17 @@
     align-items: center;
 }
 
+.main-nav ul li {
+    list-style: none;
+    border: 2px solid white;
+    padding: 5px 5px;
+}
+
 a {
+    position: relative;
+    display: block;
     text-decoration: none;
-    color: rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    color: white;
+    text-align: center;  
 }

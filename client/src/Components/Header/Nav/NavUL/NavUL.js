@@ -4,9 +4,7 @@ const NavUL = () => {
     return (
         <ul>
  <li>
-     <h3>
-         <a href="book" className="active">BOOK NOW</a>
-     </h3>
+         <a href="/book" className="active">BOOK NOW</a>
  </li>
  <li>
      <a href="services.html">Amenities</a>

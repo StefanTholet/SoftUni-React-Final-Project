@@ -3,7 +3,7 @@ const HotelName = () => {
     return (
         <div className="nav-row">
         <h1>
-            <a className="hotel-title" href="home">Hotel Horizont</a>
+            <a className="hotel-title" href="/">Hotel Horizont</a>
             </h1>
         </div>
     );

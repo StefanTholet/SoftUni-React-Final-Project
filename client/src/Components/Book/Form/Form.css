@@ -1,0 +1,23 @@
+.form-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-form {
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    border: 1px rgb(194, 194, 194) solid;
+    color: white;
+    padding: 30px 10px;
+    margin-bottom: 70%;
+    border-radius: 5px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.booking-form label {
+    padding-right: 10px;
+}
