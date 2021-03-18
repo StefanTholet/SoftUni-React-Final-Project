@@ -4,9 +4,9 @@ import { useState } from 'react';
 const Form = (props) => {
 
     return (
-        <div className="form-wrapper">
+        
             <div className="form-parent">
-                <form action="" className="booking-form" onSubmit={(event) => props.reservation(event)}>
+                <form action="" className="booking-form" onSubmit={(event) => props.handleSubmit(event)}>
                     <label htmlFor="check-in">Check-in date</label>
                     <input type="date" name="check-in" />
                     <label htmlFor="Check-out">Check-out date</label>
@@ -27,7 +27,7 @@ const Form = (props) => {
                     <input className="submit-booking" type="submit" value="Book" />
                 </form>
             </div>
-        </div>
+        
     );
 }
 

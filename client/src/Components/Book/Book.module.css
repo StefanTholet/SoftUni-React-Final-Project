@@ -1,0 +1,14 @@
+.form-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.margin-bottom-setter {
+    margin-bottom: 400px;
+    margin-top: 10px;
+    padding: 18px 20px;
+}
