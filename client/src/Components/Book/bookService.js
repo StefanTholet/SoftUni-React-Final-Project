@@ -1,3 +1,5 @@
+import { baseUrl } from '../config/index';
+
 const today = `${new Date().getMonth() +1}-${new Date().getDate() +1}-${new Date().getFullYear()}`;
 
 function getBookingData(event) {
@@ -12,9 +14,17 @@ function getBookingData(event) {
  }
 }
 
-
 function reservation(event) {
    const bookingData = getBookingData(event);
+   if (bookingData.children === 'No children') bookingData.children = 0;
+   fetch(`${baseUrl}/book`, {
+       method: 'Post',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(bookingData)
+   })
+   
    //TO DO configure back-end and mongoose to create bookings database
 }
 
