@@ -1,4 +1,4 @@
-import HeroImage from '../HeroImage/HeroImage';
+
 import Form from './Form/Form';
 import Notification from '../Notification/Notification'
 import { useState } from 'react';
@@ -24,15 +24,12 @@ const Book = (
     }
 
     return (
-        <>
-            <HeroImage image={image}>
+        <> 
             <div className={styles['form-wrapper']}>
                     <Form  handleSubmit={handleSubmit} today={today} />
                     {successState ? <Notification class={'margin-bottom-setter'} message={'Your booking is successful!'} /> 
                     : <div className={styles['margin-bottom-setter']}></div>}
                     </div>
-            </HeroImage>
-
         </>
     );
 }
