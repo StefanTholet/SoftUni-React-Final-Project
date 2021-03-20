@@ -7,7 +7,7 @@ const NavUL = () => {
                 <NavLink to="/book" exact activeClassName="active">BOOK NOW</NavLink>
             </li>
             <li>
-                <NavLink to="/services" activeClassName="active">Amenities</NavLink>
+                <NavLink to="/blog" activeClassName="active">Blog</NavLink>
             </li>
             <li>
                 <NavLink to="/about" activeClassName="active">About Us</NavLink>
