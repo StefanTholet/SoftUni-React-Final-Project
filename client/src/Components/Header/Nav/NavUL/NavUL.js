@@ -10,7 +10,7 @@ const NavUL = () => {
                 <NavLink to="/blog" activeClassName="active">Blog</NavLink>
             </li>
             <li>
-                <NavLink to="/about" activeClassName="active">About Us</NavLink>
+                <NavLink to="/create-blog" activeClassName="active">Add Blog Post</NavLink>
             </li>
             <li>
                 <NavLink to="/contact" activeClassName="active">Contact</NavLink>

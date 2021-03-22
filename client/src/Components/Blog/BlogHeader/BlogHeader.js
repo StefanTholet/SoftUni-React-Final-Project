@@ -1,4 +1,4 @@
-const BlogHeader = () => {
+const BlogHeader = ({ image }) => {
 
     return  (
         <div className="blog-header">
@@ -7,7 +7,7 @@ const BlogHeader = () => {
                 <style>
         {`
     .blog-cover {    
-    background: url(slide_4.jpg);
+    background: url(${image});
     background-size: cover;
     border-radius: 5px 5px 0 0;
     height: 15rem;

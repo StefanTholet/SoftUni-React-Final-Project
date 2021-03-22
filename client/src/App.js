@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Book from './Components/Book/Book';
 import Blog from './Components/Blog/Blog';
+import CreateBlog from './Components/CreateBlog/CreateBlog';
 // import RegisterCTA from './Components/Register/RegisterCTA';
 function App(props) {
   const path = props.history.location.pathname;
@@ -18,6 +19,7 @@ function App(props) {
         <Switch>
           <Route path="/book" component={Book}></Route>
           <Route path="/blog" component={Blog} exact></Route>
+          <Route path="/create-blog" component={CreateBlog} exact></Route>
         </Switch>
     </div>
     </div>

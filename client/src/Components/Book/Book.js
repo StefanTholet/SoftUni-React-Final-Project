@@ -4,8 +4,8 @@ import Notification from '../Notification/Notification'
 import { useState } from 'react';
 import  styles  from './Book.module.css';
 
-import { today } from './bookService';
-import { reservation } from './bookService';
+import { today, reservation } from '../services/bookService';
+
 const Book = (
     { image }
 ) => {
