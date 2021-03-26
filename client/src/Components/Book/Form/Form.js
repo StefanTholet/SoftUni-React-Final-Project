@@ -1,33 +1,37 @@
-import './Form.css'
-import { adultsOptions, childrenOptions, roomOptions } from './formService';
-import { useState } from 'react';
-const Form = (props) => {
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
+import DatePickers from './DatePickers';
+import GuestOptions from './GuestOptions';
+import RoomOptions from './RoomOptions';
+
+
+
+const Form = ({ onFormBookingSubmit }) => {
     return (
-        
-            <div className="form-parent">
-                <form action="" className="booking-form" onSubmit={(event) => props.handleSubmit(event)}>
-                    <label htmlFor="check-in">Check-in date</label>
-                    <input type="date" name="check-in" />
-                    <label htmlFor="Check-out">Check-out date</label>
-                    <input type="date" name="Check-out" id="" />
-                    <label htmlFor="adults">Adults</label>
-                    <select name="adults" id="">
-                        {adultsOptions}
-                    </select>
-                    <label htmlFor="children">Children</label>
-                    <select name="children" id="">
-                        <option value="No children" >No children</option>
-                        {childrenOptions}
-                    </select>
-                    <label htmlFor="room">Rooms</label>
-                    <select name="rooms" id="">
-                        {roomOptions}
-                    </select>
-                    <input className="submit-booking" type="submit" value="Book" />
-                </form>
-            </div>
-        
+        <form onSubmit={(e) => onFormBookingSubmit(e)} style={{ marginTop: '5em' }}>
+            <Grid className="form-container" spacing={2} container xs={4} direction="row" justify="center">
+                <DatePickers />
+                <GuestOptions />
+                <RoomOptions />
+                <Grid >
+                    <Button type="submit
+                    " style={{ color: 'black', marginTop: '1em' }} variant="outlined">Book Rooms</Button>
+                </Grid>
+            </Grid>
+            <style jsx={true}>{`
+                    .form-container {
+                        border: 1px solid black;
+                        border-radius: 5px;
+                        margin: 0 auto;
+                        margin-top: 1em;
+                        padding: 2em
+                    }
+                    form {
+                        width:100%
+                    }
+            `}</style>
+        </form>
     );
 }
 
