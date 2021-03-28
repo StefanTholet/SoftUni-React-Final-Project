@@ -9,7 +9,12 @@ function getAll(Model) {
     return Model.find({}).lean();
 }
 
+function getOne(Model, id) {
+    return Model.findById(id).lean();
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    getOne
 }

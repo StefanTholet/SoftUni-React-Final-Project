@@ -1,8 +1,6 @@
 import { today } from '../../services/bookService';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-
 const DatePickers = () => {
     return (
         <Grid item className="date-pickers">

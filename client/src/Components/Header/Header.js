@@ -6,7 +6,6 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 const Header = (props) => {
-    const path = props.history.location.pathname;
     const useStyles = makeStyles({
         'nav-links': {
             color: 'black',

@@ -13,10 +13,17 @@ const bookingPage = {
   minHeight: '100vh',
 }
 
+const blogPostPage = {
+  width: '100%',
+  minHeight: '100vh',
+  
+}
+
 const locationStyles = {
     '/book':bookingPage,
     '/': homePage,
-    '/blog': '#e5ded8',
+    '/blog': bookingPage,
+    '/blog-post': blogPostPage,
     '/create-blog': '#e5ded8'
 }
 

@@ -1,39 +1,39 @@
 import style from './App.module.css';
-import { setStyles } from './Components/services/locationStyles/pageWrapper';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Header from './Components/Header/Header';
 import Book from './Components/Book/Book';
-import Blog from './Components/Blog/Blog';
+import BlogPostsPage from './Components/Blog/BlogPostsPage/BlogPostsPage';
+import ReadBlogPost from './Components/Blog/ReadBlogPost/ReadBlogPost';
 import CreateBlog from './Components/CreateBlog/CreateBlog';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
 
 function App(props) {
-  const path = props.history.location.pathname;
+  let path = props.history.location.pathname;
+  let location = path;
+  path.includes('read-more') ? location = '/blog-post' : location = path;
   const setStyles = makeStyles({
-    'grid-site-container': locationStyles[path]
+    'grid-site-container': locationStyles[location]
   });
   const classes = setStyles()
-  console.log(classes)
   return (
-    <div className={style.App}>
-      <Grid container>
-        <Paper className={classes['grid-site-container']}>
+    <Grid container className={style.App}>
+        <Grid className={classes['grid-site-container']}>
           <Header />
-
           <Switch>
             <Route path="/book" component={Book}></Route>
-            <Route path="/blog" component={Blog} exact></Route>
+            <Route path="/blog" component={BlogPostsPage} exact></Route>
+            <Route path="/blog/read-more/:postId" component={ReadBlogPost}></Route>
             <Route path="/create-blog" component={CreateBlog} exact></Route>
           </Switch>
           {/* </div> */}
-        </Paper>
+        
       </Grid>
-    </div>
+    </Grid>
 
   );
 }

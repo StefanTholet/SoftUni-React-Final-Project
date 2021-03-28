@@ -1,10 +1,16 @@
-import BlogHeader from './BlogHeader/BlogHeader';
-import BlogBody from './BlogBody/BlogBody';
-
+import HeroImage from '../../HeroImage/HeroImage';
+import PostPreviewCard from './PostPreviewCard';
 import { useState, useEffect } from 'react';
 import { getPosts } from '../../services/blogService';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Blog = (props) => {
+const useStyles = makeStyles({
+    "blog-posts-container": {
+    }
+})
+
+const BlogPostsPage = (props) => {
     const [blogPosts, setPosts] = useState([]);
     useEffect(() => {
         getPosts()
@@ -12,36 +18,19 @@ const Blog = (props) => {
         .then(allPosts =>  setPosts(allPosts))
         .catch(err => console.log(err))
     },[]);
-   
+    const classes = useStyles();
+   console.log(blogPosts);
     return (
-        <div className="blog-container">
+        <>
+        <HeroImage image={'blog.jpg'}/>
+        <Grid container direction="column" alignItems="center" className={classes['blog-posts-container']}>
         {blogPosts.map(post => {
-            console.log(post.imageUrl)
-            return (
-                <div className="single-blog-post">
-                <BlogHeader post={post}/>
-                <BlogBody post={post} />
-                </div>
-            );
-        })   }
-            <style jsx>
-                {`
-                .blog-container {
-                    border-radius: 5px;
-                    box-shadow: rgb(0 0 0 / 20%) 0 4px 2px -2px;
-                    font-family: "adelle-sans", sans-serif;
-                    font-weight: 100;
-                    margin: 48px auto;
-                    width: 50%;
-                }
-                .single-blog {
-                    margin-top: 10px
-                }
-
-        `}
-            </style>
-        </div>
+             post.content = post.content.split('.').splice(0, 3).join('') + '...';
+             return <PostPreviewCard blogData={post} />}
+        )}
+        </Grid>
+        </>
     );
 }
 
-export default Blog;
+export default BlogPostsPage;

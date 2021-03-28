@@ -18,6 +18,10 @@ router.get('/all-posts', (req, res) => {
     .catch(err => console.log(err))
 })
 
-
+router.get('/posts/:postId', (req, res) => {
+    const postId = req.params.postId;
+    dbServices.getOne(Blog, postId)
+    .then(post => res.json(post))
+})
 
 module.exports = router;

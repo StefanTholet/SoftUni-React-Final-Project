@@ -1,11 +1,8 @@
 import Form from './Form/Form';
-
+import HeroImage from '../HeroImage/HeroImage';
 
 import { reservation } from '../services/bookService';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import { makeStyles } from '@material-ui/core/styles';
+
 
 
 
@@ -33,26 +30,14 @@ const Book = (
     //         })
     // }
 
-    const useStyles = makeStyles({
-        root: {
-            width: '100%',
-            margin: 'auto',
-           
-        },
-        media: {
-            height: '10rem',
-        },
-    });
+    
 
-    const classes = useStyles();
+    
     return (
-        <Grid container item xs={12} md={12} style={{margin: 'auto'}}>
-            <Card className={classes.root}>
-                <CardMedia className={classes.media} image='slide_1.jpg' />
-            </Card>
+        <>
+            <HeroImage image={'bookingHero.jpg'} />
             <Form onFormBookingSubmit={onFormBookingSubmit} className="MuiInput-input"></Form>
-        </Grid>
-
+        </>
     );
 }
 export default Book;

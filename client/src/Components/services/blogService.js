@@ -1,4 +1,4 @@
-import { baseUrl } from '../config/index';
+
 import { today } from './bookService';
 import { sendRequest } from './server'
 
@@ -18,11 +18,16 @@ function compileBody(data) {
     return blogContent;
 }
 
+function getOnePost(postId) {
+    return sendRequest(`/blog/posts/${postId}`)
+}
+
 function getPosts(params) {
     return sendRequest('/blog/all-posts')
 }
 
 export {
     sendToServer,
-    getPosts
+    getPosts,
+    getOnePost
 }
