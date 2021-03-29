@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
+import CommentsSection from '../Comments/CommentsSection';
+
 const useStyles = makeStyles(() => ({
     'post-title': {
         color: 'black',
@@ -31,14 +33,18 @@ const useStyles = makeStyles(() => ({
     divider: {
         width: '100%',
         marginBlock: '1rem'
+    },
+    'site-anchor': {
+        textDecoration: 'underline'
     }
 }))
 const ReadBlogPost = (props) => {
+   
     const currentLocation = window.location.origin;
     const classes = useStyles();
     const { match } = props;
     const [post, setPost] = useState({ title: null, author: null, content: null, imageUrl: null, createdOnDate: null });
-    console.log(currentLocation + '/' + `${post.imageUrl}`)
+
     useEffect(() => {
         const { postId } = match.params;
         getOnePost(postId)
@@ -59,9 +65,11 @@ const ReadBlogPost = (props) => {
                     image={currentLocation + '/' + `${post.imageUrl}`}
                     title=''
                 />
-                <Typography className={classes['blog-content']} variant="body1">{post.content}</Typography>
+                <Typography className={classes['blog-content']} variant='body1'>{post.content}</Typography>
                 <Divider className={classes.divider} variant="middle" />
-                <Typography>Originally published at <a to="/">Hotel Horizont</a> on {post.createdOnDate}.</Typography>
+                <Typography style={{marginRight: '36%'}}>Originally published at <Link to="/" className='site-anchor'>Hotel Horizont</Link> on {post.createdOnDate}.</Typography>
+                <Divider className={classes.divider} variant="middle" />
+                <CommentsSection post={post} />
             </Grid>
         </>
     );

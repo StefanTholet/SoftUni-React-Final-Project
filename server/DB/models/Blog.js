@@ -20,6 +20,12 @@ const blogSchema = new mongoose.Schema({
     imageUrl: {
         type: String,
     },
+    comments: [{
+        author: String,
+        avatar: String,
+        content: String,
+        postedOnDate: String
+    }]
 });
 
 module.exports = mongoose.model('Blog', blogSchema);

@@ -1,5 +1,4 @@
 import style from './App.module.css';
-
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Header from './Components/Header/Header';

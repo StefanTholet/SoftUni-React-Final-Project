@@ -24,4 +24,17 @@ router.get('/posts/:postId', (req, res) => {
     .then(post => res.json(post))
 })
 
+router.post('/posts/:postId/submit-comment', (req, res) => {
+    const id = req.params.postId;
+    console.log(id)
+    const element = req.body;
+    dbServices.updateDbArray(Blog, id , 'comments', element)
+    .then(result=> res.json(result))
+    .catch(err => console.log(err))
+})
+
+
+
+
+
 module.exports = router;

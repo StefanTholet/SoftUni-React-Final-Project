@@ -13,8 +13,16 @@ function getOne(Model, id) {
     return Model.findById(id).lean();
 }
 
+function updateDbArray(Document, id, arrayName, element) {	
+    return Document.updateOne(	
+        { _id: id },	
+        { $push: { [arrayName]: element } }	
+    )		
+}
+
 module.exports = {
     create,
     getAll,
-    getOne
+    getOne,
+    updateDbArray
 }

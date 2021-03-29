@@ -1,6 +1,7 @@
 import { baseUrl } from '../config/index';
 
 function sendRequest(endPoint, body, options) {
+    console.log(endPoint, body, options)
     if (!body) {
         return fetch(`${baseUrl}${endPoint}`);
     } else {
