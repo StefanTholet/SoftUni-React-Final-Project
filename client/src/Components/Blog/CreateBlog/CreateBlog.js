@@ -1,45 +1,35 @@
-import BlogHeader from './BlogHeader/BlogHeader';
-import BlogTextArea from './BlogTextArea/BlogTextArea';
-
+import HeroImage from '../../HeroImage/HeroImage';
+import TextEditor from './TextEditor/TextEditor';
 import { sendToServer } from '../../services/blogService';
+import { useState } from 'react';
+import ReactHtmlParser from 'react-html-parser';
 
+
+//TODO Submit button change logic of the submit post function so that it takes all the info from the content state - heading as title, <a> tag as the imageUrl and so on
 const CreateBlog = () => {
-    const submitPost  = (event) => {
+    const [content, setContent] = useState('')
+
+    const submitPost = (event) => {
         event.preventDefault();
-        const formInputs = [...event.target.elements].map(x => x.value);
-        sendToServer(formInputs)
+        const imageUrl = event.target
+        console.log(event.target.imageUrl.value)
+       // sendToServer(content)
     }
+    const onTextEditorChangeHandler = (e, editor) => {
+        const data = editor.getData();
+        console.log(document.querySelector('.ck-editor__editable'));
+      
+        setContent(data)
+    }
+ 
     return (
-        <form className="blog-form" onSubmit={(event) => submitPost(event)}>
-            <div className="blog-wrapper">
-            <BlogHeader value={"Blog Title"} />
-            <BlogHeader value={"Author"} />
-            <BlogHeader value={"Image URL"} />
-			<BlogTextArea value ={"Message"}/>
-			<div className="col-xs-12">
-				<input type="submit" className="btn-lrg submit-btn" value="Send Post" />
-                </div>
-            </div>
-            <style jsx>
-            {`
-            .blog-form {
-    display: flex;
-    justify-content: center;
-}
-
-.blog-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.blog-wrapper {
-    flex-basis: 100%;
-}
-`}
-            </style>
-	</form>
+        <>
+            <HeroImage image={'writeBlog2.jpg'} />
+            <TextEditor onChange={onTextEditorChangeHandler}
+                onSubmit={submitPost}
+            />
+            <div>{ ReactHtmlParser(content) }</div>;
+        </>
     );
 }
 

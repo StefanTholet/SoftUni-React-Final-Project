@@ -3,7 +3,8 @@ import { today } from './bookService';
 import { sendRequest } from './server'
 
 function sendToServer(data) {
-    const blogContent = compileBody(data);
+    // const blogContent = compileBody(data);
+     const blogContent = JSON.stringify({content: data});
     return sendRequest('/blog/add-blog-post', blogContent, ['Post', 'application/json']);
 }
 

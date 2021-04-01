@@ -1,5 +1,9 @@
 const router = require('express').Router();
 const dbServices = require('../services/db');
+const multiparty = require('connect-multiparty');
+const MultiPartyMiddleware = multiparty({uploadDir: './images'})
+const path = require('path');
+const fs = require('fs');
 
 const Blog = require('../DB/models/Blog');
 
@@ -33,7 +37,20 @@ router.post('/posts/:postId/submit-comment', (req, res) => {
     .catch(err => console.log(err))
 })
 
-
+router.post('/uploads', MultiPartyMiddleware, (req, res) => {
+    let TempFile = req.files.upload;
+    let TempPathFile = TempFile.path; 
+    
+    const targetPathUrl = path.join(__dirname, './uploads' + TempFile.name);
+    console.log(req.files)
+    if (path.extname(TempFile.originalFilename).toLowerCase() === '.png' || '.jpg') {
+       fs.rename(TempPathFile, targetPathUrl, err => {
+           if (err) return console.log(err)
+       }) 
+    }
+    console.log(req.files.upload)
+    res.status(200)
+})
 
 
 

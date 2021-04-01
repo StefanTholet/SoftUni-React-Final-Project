@@ -5,7 +5,7 @@ import Header from './Components/Header/Header';
 import Book from './Components/Book/Book';
 import BlogPostsPage from './Components/Blog/BlogPostsPage/BlogPostsPage';
 import ReadBlogPost from './Components/Blog/ReadBlogPost/ReadBlogPost';
-import CreateBlog from './Components/CreateBlog/CreateBlog';
+import CreateBlog from './Components/Blog/CreateBlog/CreateBlog';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';

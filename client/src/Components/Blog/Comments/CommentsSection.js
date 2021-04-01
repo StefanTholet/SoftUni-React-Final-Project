@@ -27,7 +27,10 @@ const CommentsSection = (props) => {
         postedOnDate: today
     }
     updatePostWithComment(postId, comment)
-        .then('Success!')
+        .then(res => {
+          setCommentDecision(!wantsToComment)
+          props.history.push(`/blog/read-more/${postId}`)
+        })
         .catch(err => console.log(err))
 }
 
@@ -38,11 +41,11 @@ const CommentsSection = (props) => {
        variant="contained"
        onClick={showCommentBox}
        >
-       Tell us what you think</Button>
-       {wantsToComment ? <Comment bool={true} /> : null}
+       {comments ? 'Tell us what you think' : 'Be the first person to comment!'}</Button>
+       {wantsToComment ? <Comment bool={true} submitComment={submitComment} /> : null}
        { comments ? 
         comments.map(x => 
-       <Comment submitComment={submitComment}
+       <Comment 
          content={x.content}
          author={x.author}
          avatar={x.avatar}

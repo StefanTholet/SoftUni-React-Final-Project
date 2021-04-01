@@ -8,23 +8,19 @@ const homePage = {
     backgroundSize: 'cover',
   }
 
-const bookingPage = {
+const defaultSettings = {
   width: '100%',
   minHeight: '100vh',
 }
 
-const blogPostPage = {
-  width: '100%',
-  minHeight: '100vh',
-  
-}
+
 
 const locationStyles = {
-    '/book':bookingPage,
+    '/book':defaultSettings,
     '/': homePage,
-    '/blog': bookingPage,
-    '/blog-post': blogPostPage,
-    '/create-blog': '#e5ded8'
+    '/blog': defaultSettings,
+    '/blog-post': defaultSettings,
+    '/create-blog': defaultSettings
 }
 
 export default locationStyles;

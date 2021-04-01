@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-
+import ReactHtmlParser from 'react-html-parser';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,6 +13,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: '40rem',
@@ -43,9 +44,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+
 const PostPreviewCard = (props) => {
-    console.log(props)
+    
     const { title, createdOnDate, imageUrl, altImage, content, _id } = props.blogData;
+
     const classes = useStyles();
 
     return (
@@ -57,7 +61,7 @@ const PostPreviewCard = (props) => {
                             R
             </Avatar>
                     }
-                    title={title}
+                    title={ReactHtmlParser(title)}
                     subheader={createdOnDate}
                 />
                 <CardMedia
@@ -68,14 +72,14 @@ const PostPreviewCard = (props) => {
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {content}
+                        {ReactHtmlParser(content)}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing className={classes['card-footer']}>
                     <IconButton aria-label="add to favorites">
                         <FavoriteIcon />
                     </IconButton>
-                    <Button component={Link} to={`/blog/read-more/${_id}`} style={{backgroundColor: red[500], color: 'white'}}>Read more</Button>                
+                    <Button component={Link} to={`/blog/read-more/${_id}`} style={{ backgroundColor: red[500], color: 'white' }}>Read more</Button>
                 </CardActions>
             </Card>
         </Grid>

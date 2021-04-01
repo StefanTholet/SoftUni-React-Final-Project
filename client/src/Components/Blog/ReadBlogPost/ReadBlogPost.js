@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 const ReadBlogPost = (props) => {
-   
+//TODO force ReadBlogPost component to re-render so that newest comment is shown right away
     const currentLocation = window.location.origin;
     const classes = useStyles();
     const { match } = props;
