@@ -5,7 +5,6 @@ const today = `${new Date().getMonth() + 1}-${new Date().getDate() + 1}-${new Da
 function getBookingData(event) {
     event.preventDefault();
     const formData = [...event.target].map(input => input.value)
-    console.log(formData)
     return JSON.stringify({
         dates: {
             'check-in': formData[0],

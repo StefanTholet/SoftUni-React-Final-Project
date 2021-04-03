@@ -10,7 +10,6 @@ import { reservation } from '../services/bookService';
 const Book = (
     {history, user}
 ) => {
-    // console.log(props)
     useEffect(() => {
         if (!user) {
         history.push('/login')

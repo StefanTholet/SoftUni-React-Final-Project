@@ -13,16 +13,24 @@ function getOne(Model, id) {
     return Model.findById(id).lean();
 }
 
-function updateDbArray(Document, id, arrayName, element) {	
+function addToDbArray(Document, id, arrayName, element) {	
     return Document.updateOne(	
         { _id: id },	
         { $push: { [arrayName]: element } }	
-    )		
+    ).lean()		
+}
+
+function removeFromDbArray(Document, id, arrayName, element) {	
+    return Document.updateOne(	
+        { _id: id },	
+        { $pull: { [arrayName]: element } }	
+    ).lean()		
 }
 
 module.exports = {
     create,
     getAll,
     getOne,
-    updateDbArray
+    addToDbArray,
+    removeFromDbArray
 }

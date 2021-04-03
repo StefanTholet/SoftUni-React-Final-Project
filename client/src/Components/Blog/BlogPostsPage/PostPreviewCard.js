@@ -13,6 +13,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { sendRequest } from '../../services/server';
+import { useState, useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,13 +46,46 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// 
 
+const PostPreviewCard = ({ blogData, user }) => {
+    // set useEffect to check if blogId can be found inside user.favoritePosts and set favorite to true if so
+    // add check to click handler to see if favorite is true and return if so
+    // change color of icon to reflect the status
+    const [isFavorite, setFavorite] = useState(null)
 
-const PostPreviewCard = (props) => {
-    
-    const { title, createdOnDate, imageUrl, altImage, content, _id } = props.blogData;
+    const { title, createdOnDate, imageUrl, altImage, content, _id } = blogData;
 
+    useEffect(() => {
+        setFavorite(user.favoritePosts.includes(_id))
+    }, [])
+    console.log(user.favoritePosts)
+    console.log(_id)
+    console.log(isFavorite)
     const classes = useStyles();
+
+    const addPostToFavorites = (id) => {
+        if (isFavorite) {
+            console.log('already in favorites')
+            sendRequest(`/blog/${id}/remove-post-from-favorites`,
+                JSON.stringify({ userID: user._id }),
+                ['POST', 'application/json'])
+                .then(res => {
+                    console.log(res)
+                    setFavorite(false)
+                })
+                .catch(err => console.log(err))
+            return;
+        }
+        sendRequest(`/blog/${id}/add-post-to-favorites`,
+            JSON.stringify({ userID: user._id }),
+            ['POST', 'application/json'])
+            .then(res => {
+                console.log(res)
+                setFavorite(true)
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <Grid item className={classes['card-container']} xs={6}>
@@ -76,10 +111,14 @@ const PostPreviewCard = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing className={classes['card-footer']}>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
+                    <IconButton aria-label="add to favorites" onClick={() => addPostToFavorites(_id)}>
+                        <FavoriteIcon style={isFavorite ? { color: '#f50057' } : null} />
                     </IconButton>
-                    <Button component={Link} to={`/blog/read-more/${_id}`} style={{ backgroundColor: red[500], color: 'white' }}>Read more</Button>
+                    <Button component={Link} to={`/blog/read-more/${_id}`}
+                        style={{
+                            backgroundColor: red[500], color: 'white'
+                        }}
+                    >Read more</Button>
                 </CardActions>
             </Card>
         </Grid>

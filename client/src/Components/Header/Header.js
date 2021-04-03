@@ -39,7 +39,7 @@ const Header = (props) => {
                             ? <Grid item>
                                 <Button component={NavLink} to={`/users/${user._id}/profile`} >
                                     <Typography className={classes['nav-links']} variant="h5">
-                                        Welcome back, {user.firstName}
+                                        Welcome back, {user.firstName}!
                                     </Typography>
                                 </Button>
                             </Grid>

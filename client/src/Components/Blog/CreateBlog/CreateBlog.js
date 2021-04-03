@@ -32,7 +32,7 @@ const CreateBlog = (props) => {
     }
     const onTextEditorChangeHandler = (e, editor) => {
         const data = editor.getData();
-        console.log(document.querySelector('.ck-editor__editable'));
+        // console.log(document.querySelector('.ck-editor__editable'));
         setBody(data)
     }
 

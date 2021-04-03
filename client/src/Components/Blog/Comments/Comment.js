@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Comment = (props) => {
-    console.log('render')
     const isNewComment = props.bool;
 
     const classes = useStyles();

@@ -13,7 +13,7 @@ const register = async ({ firstName, lastName, email, password }) => {
 };
 
 const login = async ({ username, password }) => {
-    let user = await User.findOne({ username });
+    let user = await User.findOne({ username }).lean();
     if (!user) throw { message: 'Username or password does not match' };
 
     let isMatch = await bcrypt.compare(password, user.password);

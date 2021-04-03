@@ -13,11 +13,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
 
 import { sendRequest } from './Components/services/server';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App(props) {
 
   const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    if (user) {
+      sendRequest(`/auth/user/${user._id}`)
+      .then(res => res.json())
+      .then(user => console.log(user))
+      .catch(err => console.log(err));
+    }
+  }) // fetch user data every time ?
+
+ 
 
   let path = props.history.location.pathname;
   let location = path;
@@ -40,7 +51,6 @@ function App(props) {
     sendRequest(registrationUrl, JSON.stringify(user), ['Post', 'application/json'])
       .then(userData => {
         setUser(userData)
-        console.log(user)
       })
   }
 

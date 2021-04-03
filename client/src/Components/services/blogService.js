@@ -4,12 +4,14 @@ import { sendRequest } from './server'
 
 function compileBlogPost(postData) {
     const regextPatterns = {
-        heading: /<h[0-6]>.*<\/h[0-6]>/gm,
-        content: /<p>.*<\/p>/gm
+        heading: /<h[0-6]>.+<\/h[0-6]>/gm,
+        content: /<p>.+<\/p>/gm
     };
     const title = postData.content.match(regextPatterns.heading);
     const content = postData.content.split(regextPatterns.heading);
+    if (title) {
     content.splice(content.indexOf(''), 1)
+}
     const post = {
        title,
        content,
@@ -18,7 +20,6 @@ function compileBlogPost(postData) {
        imageUrl: postData.imageUrl,
        _id: postData._id
     }
-    console.log(postData)
     return post
 }
 

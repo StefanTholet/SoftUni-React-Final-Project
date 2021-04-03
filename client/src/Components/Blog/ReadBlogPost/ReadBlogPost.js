@@ -65,7 +65,7 @@ const ReadBlogPost = (props) => {
     }, []);
     return (
         <>
-            <HeroImage image={currentLocation + `/blog.jpg`} />
+            <HeroImage image={`/blog.jpg`} />
             <Grid container alignItems="center" spacing={4}
                 className={classes['blog-container']}
                 direction="column">

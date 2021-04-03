@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String
     },
+    blogPosts: {
+        type: []
+    },
+    favoritePosts: {
+        type:[]
+    }
     // imageUrl: {
     //     type: String
     // },

@@ -5,6 +5,12 @@ const dbServices = require('../services/db');
 
 const User = require('../DB/models/User');
 
+router.get('/user/:userID', (req, res) => {
+    dbServices.getOne(User, req.params.userID)
+    .then(user => res.json(user))
+    .catch(err => console.log(err))
+})
+
 router.post('/register', async (req, res) => {
     let { firstName, lastName, password, email } = req.body;
     console.log(req.body)
