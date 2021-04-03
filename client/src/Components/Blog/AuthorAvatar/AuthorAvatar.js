@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
     },
 }))
 
-const AuthorAvatar = (props) => {
+const AuthorAvatar = ({ createdOn, author }) => {
     const classes = useStyles();
     return (
         <Grid container item className={classes['avatar-container']} xs={12} md={12} >
@@ -23,10 +23,10 @@ const AuthorAvatar = (props) => {
             <Grid className='post-details'>
                 <Grid className='author-name' container direction="column" >
                     <Typography variant='caption' className={classes['post-typography']} color="primary">
-                        Stefan Tholet
+                        {author}
                     </Typography>
                     <Typography variant='caption' className={classes['post-typography']} color="primary">
-                        12/03/2021
+                        {createdOn}
                     </Typography>
                 </Grid>
             </Grid>

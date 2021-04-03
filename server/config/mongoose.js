@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongooseEndPoint = require('../credentials')
+const mongooseEndPoint = 'mongodb+srv://chefyata:pomber145@cluster0.wo3t9.mongodb.net/react';
 
 let connection = mongoose.connect(mongooseEndPoint, { useNewUrlParser: true, useUnifiedTopology: true });
 module.exports = connection;

@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import Comment from './Comment';
 import Button from '@material-ui/core/Button';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { updatePostWithComment } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';

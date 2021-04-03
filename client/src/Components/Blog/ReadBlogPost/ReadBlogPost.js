@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+
 import HeroImage from '../../HeroImage/HeroImage';
 import { getOnePost } from '../../services/blogService';
 import Typography from '@material-ui/core/Typography';
@@ -9,11 +9,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import CommentsSection from '../Comments/CommentsSection';
+import ReactHtmlParser from 'react-html-parser';
+import { withRouter } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { compileBlogPost } from '../../services/blogService';
 
 const useStyles = makeStyles(() => ({
     'post-title': {
         color: 'black',
-        alignSelf: 'start'
+        alignSelf: 'start',
+        fontSize: '1.4rem'
     },
     'blog-container': {
         margin: '0 auto',
@@ -39,35 +44,46 @@ const useStyles = makeStyles(() => ({
     }
 }))
 const ReadBlogPost = (props) => {
-//TODO force ReadBlogPost component to re-render so that newest comment is shown right away
+    //TODO force ReadBlogPost component to re-render so that newest comment is shown right away
+    const [post, setPost] = useState({});
     const currentLocation = window.location.origin;
     const classes = useStyles();
-    const { match } = props;
-    const [post, setPost] = useState({ title: null, author: null, content: null, imageUrl: null, createdOnDate: null });
+    const { match, user, history } = props;
+
 
     useEffect(() => {
+        if (!user) {
+            history.push('/login')
+        }
         const { postId } = match.params;
         getOnePost(postId)
             .then(res => res.json())
             .then(res => {
-                setPost(res);
+                setPost(compileBlogPost(res));
             })
             .catch(err => console.log(err))
     }, []);
     return (
         <>
             <HeroImage image={currentLocation + `/blog.jpg`} />
-            <Grid container alignItems="center" spacing={4} className={classes['blog-container']} direction="column">
-                <Typography variant='h3' className={classes['post-title']}>{post.title}</Typography>
-                <AuthorAvatar></AuthorAvatar>
+            <Grid container alignItems="center" spacing={4}
+                className={classes['blog-container']}
+                direction="column">
+                <Typography variant='h3' className={classes['post-title']}>
+                    {ReactHtmlParser(post.title)}
+                </Typography>
+                <AuthorAvatar author={post.author} createdOn={post.createdOn} />
                 <CardMedia
                     className={classes.media}
-                    image={currentLocation + '/' + `${post.imageUrl}`}
-                    title=''
+                    image={`${currentLocation}/${post.imageUrl}`}
+                    title={ReactHtmlParser(post.title)}
                 />
-                <Typography className={classes['blog-content']} variant='body1'>{post.content}</Typography>
+                <Typography className={classes['blog-content']}
+                    variant='body1'>
+                    {ReactHtmlParser(post.content)}
+                </Typography>
                 <Divider className={classes.divider} variant="middle" />
-                <Typography style={{marginRight: '36%'}}>Originally published at <Link to="/" className='site-anchor'>Hotel Horizont</Link> on {post.createdOnDate}.</Typography>
+                <Typography style={{ marginRight: '36%' }}>Originally published at <Link to="/" className='site-anchor'>Hotel Horizont</Link> on {post.createdOn}.</Typography>
                 <Divider className={classes.divider} variant="middle" />
                 <CommentsSection post={post} />
             </Grid>
@@ -75,4 +91,4 @@ const ReadBlogPost = (props) => {
     );
 }
 
-export default ReadBlogPost;
+export default withRouter(ReadBlogPost);

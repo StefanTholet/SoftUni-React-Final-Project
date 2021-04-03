@@ -1,36 +1,50 @@
 import HeroImage from '../../HeroImage/HeroImage';
 import TextEditor from './TextEditor/TextEditor';
-import { sendToServer } from '../../services/blogService';
-import { useState } from 'react';
+import { sendRequest } from '../../services/server';
+import { useState, useEffect } from 'react';
 import ReactHtmlParser from 'react-html-parser';
+import { today } from '../../services/bookService';
+import { withRouter } from 'react-router-dom';
 
+const CreateBlog = (props) => {
+    const [body, setBody] = useState({})
 
-//TODO Submit button change logic of the submit post function so that it takes all the info from the content state - heading as title, <a> tag as the imageUrl and so on
-const CreateBlog = () => {
-    const [content, setContent] = useState('')
+    const { user, author, history } = props;
+
+    useEffect(() => {
+        if (!user) {
+            history.push('/login')
+        }
+    })
 
     const submitPost = (event) => {
         event.preventDefault();
-        const imageUrl = event.target
-        console.log(event.target.imageUrl.value)
-       // sendToServer(content)
+        const imageUrl = event.target.imageUrl.value;
+        const blogData = JSON.stringify({
+            content: body,
+            imageUrl,
+            creator: user._id,
+            author,
+            createdOn: today
+        });
+        sendRequest('/blog/add-blog-post', blogData, ['POST', 'application/json'])
+            .then(res => console.log(res))
     }
     const onTextEditorChangeHandler = (e, editor) => {
         const data = editor.getData();
         console.log(document.querySelector('.ck-editor__editable'));
-      
-        setContent(data)
+        setBody(data)
     }
- 
+
     return (
         <>
             <HeroImage image={'writeBlog2.jpg'} />
             <TextEditor onChange={onTextEditorChangeHandler}
                 onSubmit={submitPost}
             />
-            <div>{ ReactHtmlParser(content) }</div>;
+            <div>{ReactHtmlParser(body)}</div>;
         </>
     );
 }
 
-export default CreateBlog;
+export default withRouter(CreateBlog);

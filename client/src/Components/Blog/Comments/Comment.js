@@ -2,10 +2,7 @@ import { Avatar, Grid, Paper } from "@material-ui/core";
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from "react";
-import { withRouter } from 'react-router-dom';
 
-const imgLink = '';
 const useStyles = makeStyles(() => ({
     'new-comment': {
         color: 'black',

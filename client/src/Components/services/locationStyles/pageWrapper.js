@@ -20,7 +20,9 @@ const locationStyles = {
     '/': homePage,
     '/blog': defaultSettings,
     '/blog-post': defaultSettings,
-    '/create-blog': defaultSettings
+    '/create-blog': defaultSettings,
+    '/register': defaultSettings,
+    '/login': defaultSettings,
 }
 
 export default locationStyles;

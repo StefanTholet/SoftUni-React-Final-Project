@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { getPosts } from '../../services/blogService';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import ReactHtmlParser from 'react-html-parser';
+import { withRouter } from 'react-router-dom';
+import { compileBlogPost } from '../../services/blogService'
 
 const useStyles = makeStyles({
     "blog-posts-container": {
@@ -16,18 +17,18 @@ const regextPatterns = {
     content: /<p>.*<\/p>/gm
 }
 
-const BlogPostsPage = (props) => {
+const BlogPostsPage = ({ history, user }) => {
     const [blogPosts, setPosts] = useState([]);
     useEffect(() => {
+        if (!user) {
+            history.push('/login')
+        }
         getPosts()
             .then(result => result.json())
             .then(allPosts => {
                 const docodedPosts = allPosts.map(post => {
-                    post.title = post.content.match(regextPatterns.heading)[0];
-                    post.content = post.content.match(regextPatterns.content)[0];
-                    return post
+                    return compileBlogPost(post);
                 })
-                console.log(docodedPosts)
                 setPosts(docodedPosts)
             })
             .catch(err => console.log(err))
@@ -37,15 +38,12 @@ const BlogPostsPage = (props) => {
         <>
             <HeroImage image={'blog.jpg'} />
             <Grid container direction="column" alignItems="center" className={classes['blog-posts-container']}>
-                {blogPosts.map(post => {
-                    {/* post.content = post.content.split('.').splice(0, 3).join('') + '...'; */ }
+                {blogPosts.map(post => <PostPreviewCard blogData={post} user={user}/>
 
-                    return <PostPreviewCard blogData={post} />
-                }
                 )}
             </Grid>
         </>
     );
 }
 
-export default BlogPostsPage;
+export default withRouter(BlogPostsPage);
