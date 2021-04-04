@@ -38,10 +38,8 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const BlogPost = ({ post }) => {
-    const currentLocation = window.location.origin;
+const BlogPost = ({ post, ref }) => {
     const classes = useStyles();
-
     return (
         <>
             <Grid container alignItems="center" spacing={4}

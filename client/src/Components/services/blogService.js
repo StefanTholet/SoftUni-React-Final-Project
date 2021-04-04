@@ -7,7 +7,6 @@ function compileBlogPost(postData) {
         heading: /<h[0-6]>.+<\/h[0-6]>/gm,
         content: /<p>.+<\/p>/gm
     };
-    if (postData.content) {
     const title = postData.content.match(regextPatterns.heading);
     const content = postData.content.split(regextPatterns.heading);
     if (title) {
@@ -22,7 +21,7 @@ function compileBlogPost(postData) {
        _id: postData._id
     }
     return post;
-}
+// }
 }
 
 function getOnePost(postId) {

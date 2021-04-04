@@ -26,9 +26,7 @@ function App(props) {
       .then(user => console.log(user))
       .catch(err => console.log(err));
     }
-  }) // fetch user data every time ?
-
- 
+  }) 
 
   let path = props.history.location.pathname;
   let location = path;
@@ -63,6 +61,7 @@ function App(props) {
     sendRequest('/auth/login', loginDetails, ['POST', 'application/json'])
       .then(userData => {
         setUser(userData)
+        props.history.push('/create-blog')
       })
   }
 

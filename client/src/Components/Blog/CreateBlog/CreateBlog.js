@@ -1,7 +1,7 @@
 import HeroImage from '../../HeroImage/HeroImage';
 import TextEditor from './TextEditor/TextEditor';
 import { sendRequest } from '../../services/server';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { compileBlogPost } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
@@ -9,7 +9,12 @@ import BlogPost from '../ReadBlogPost/BlogPost';
 import Grid from '@material-ui/core/Grid';
 
 const CreateBlog = (props) => {
-    const [body, setBody] = useState(null)
+    const { user, author, history } = props;
+
+    if (!user) {
+        history.push('/login')
+    }
+    const [body, setBody] = useState('')
     const [preview, setPreview] = useState(false);
 
     const [imageUrl, setImageUrl] = useState('');
@@ -17,24 +22,20 @@ const CreateBlog = (props) => {
         setImageUrl(e.target.value)
     }
 
-    const { user, author, history } = props;
-
-    if (!user) {
-        history.push('/login')
-    }
-
+    const postPreview = useRef();
+    let post = {};
     useEffect(() => {
-        if (preview && body) {
-            const post = compileBlogPost(
+         if (preview && body) {
+            post = compileBlogPost(
                 {
                     content: body,
                     imageUrl,
                     author,
                     createdOn: today,
                     _id: user._id
-                })
-            setBody(post)
-        }
+                })   
+            postPreview.current.scrollIntoView({ behavior: 'smooth'})
+         }
     }, [preview])
 
     const submitPost = (e) => {
@@ -48,7 +49,7 @@ const CreateBlog = (props) => {
     }
 
     const onPreviewPostBtnClick = () => {
-            setPreview((currentPreview) => (!currentPreview))
+        return setPreview((currentPreview) => (!currentPreview));
     }
 
     return (
@@ -58,10 +59,13 @@ const CreateBlog = (props) => {
                 onSubmit={submitPost} onPreview={onPreviewPostBtnClick}
                 onImageUrlInputChangeHandler={onImageUrlInputChangeHandler}
             />
+            <Grid >
             {preview ?
                 <BlogPost post={{ ...body }} />
                 : null
             }
+            <div ref={postPreview}/>
+            </Grid>
         </Grid>
     );
 }
