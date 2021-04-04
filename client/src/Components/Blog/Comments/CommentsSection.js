@@ -13,7 +13,7 @@ const CommentsSection = (props) => {
   const [wantsToComment, setCommentDecision] = useState(false);
   const comments = props.post.comments
   const showCommentBox = () => {
-      setCommentDecision(!wantsToComment);
+    setCommentDecision(!wantsToComment);
   }
 
   const submitComment = (e) => {
@@ -21,40 +21,40 @@ const CommentsSection = (props) => {
     const { postId } = props.match.params;
     const content = e.target.comment.value;
     const comment = {
-        author: 'Stefan',
-        avatar: `${currentLocation}/profile.jpeg`,
-        content,
-        postedOnDate: today
+      author: 'Stefan',
+      avatar: `${currentLocation}/profile.jpeg`,
+      content,
+      postedOnDate: today
     }
     updatePostWithComment(postId, comment)
-        .then(res => {
-          setCommentDecision(!wantsToComment)
-          props.history.push(`/blog/read-more/${postId}`)
-        })
-        .catch(err => console.log(err))
-}
+      .then(res => {
+        setCommentDecision(!wantsToComment)
+        props.history.push(`/blog/read-more/${postId}`)
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
-    <Grid style={{ width: '100%' }}>
-      <h1>Comments</h1>
-      <Button style={{marginBottom: '2.5rem'}}
-       variant="contained"
-       onClick={showCommentBox}
-       >
-       {comments ? 'Tell us what you think' : 'Be the first person to comment!'}</Button>
-       {wantsToComment ? <Comment bool={true} submitComment={submitComment} /> : null}
-       { comments ? 
-        comments.map(x => 
-       <Comment 
-         content={x.content}
-         author={x.author}
-         avatar={x.avatar}
-         postedOnDate={x.postedOnDate}
-         key={x._id}
-       />)
-       :null
-       }
-     </Grid>
+    <Grid style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
+        <h1>Comments</h1>
+        <Button style={{ marginBottom: '2.5rem' }}
+          variant="contained"
+          onClick={showCommentBox}
+        >
+          {comments ? 'Tell us what you think' : 'Be the first person to comment!'}</Button>
+        {wantsToComment ? <Comment bool={true} submitComment={submitComment} /> : null}
+        {comments ?
+          comments.map(x =>
+            <Comment
+              content={x.content}
+              author={x.author}
+              avatar={x.avatar}
+              postedOnDate={x.postedOnDate}
+              key={x._id}
+            />)
+          : null
+        }
+    </Grid>
   );
 }
 

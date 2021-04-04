@@ -13,7 +13,7 @@ const HeroImage = (props) => {
         media: {
             // paddingTop: '56.25%',
             width: '90%',
-            height: '35vh',
+            height: '50vh',
             margin: '0 auto'
         },
     });
@@ -21,7 +21,7 @@ const HeroImage = (props) => {
     return (
         <Grid container item xs={12} md={12} style={{ margin: 'auto' }}>
             <Card className={classes.root}>
-                <CardMedia className={classes.media} image={`${currentLocation}/${props.image}`} key={image}/>
+                <CardMedia className={classes.media} image={`${props.image}`} key={image}/>
             </Card>
          </Grid>
     );

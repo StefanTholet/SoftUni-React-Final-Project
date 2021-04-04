@@ -5,13 +5,18 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 
-const TextEditor = ({ onSubmit, onChange }) => {
+const TextEditor = ({ 
+    onSubmit, 
+    onTextEditorChange, 
+    onPreview,
+    onImageUrlInputChangeHandler
+ }) => {
 
     return (
         <form onSubmit={onSubmit}
             style={{ display: 'flex', flexDirection: 'column' }}>
             <CKEditor
-                onChange={onChange}
+                onChange={onTextEditorChange}
                 editor={ClassicEditor}
                 config={
                     {
@@ -29,15 +34,36 @@ const TextEditor = ({ onSubmit, onChange }) => {
                     }
                 }
             />
-            <TextField id="outlined-basic" 
-            label="Image URL" 
-            variant="outlined"
-            name="imageUrl"
-            id="imageUrl" 
-            style={{maxWidth: '30rem', margin: '0 auto', marginTop: '0.5rem'}}/>
-            <Button type="submit"
-                style={{ margin: '0 auto', marginTop: '0.5rem' }}
-                variant="outlined">Submit</Button>
+            <TextField id="outlined-basic"
+                onChange={(e) => onImageUrlInputChangeHandler(e)}
+                label="Image URL"
+                variant="outlined"
+                name="imageUrl"
+                id="imageUrl"
+                style={{ maxWidth: '30rem', margin: '0 auto', marginTop: '0.5rem' }} />
+            <div className='submit-btn-container'>
+                <Button
+                    className=".post-btn"
+                    variant="outlined"
+                    onClick={(e) => onPreview(e)}
+                >Preview Post</Button>
+                <Button type="submit"
+                    className=".post-btn"
+                    variant="outlined">Submit</Button>
+            </div>
+            <style jsx>{`
+                    .submit-btn-container {
+                        min-width: 15rem; 
+                        margin: 0 auto;
+                        margin-top: 0.5rem;
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                    .post-btn {
+                        margin: 0 auto; 
+                        margin-top: 0.5rem;
+                    }
+                `}</style>
         </form>
     )
 }

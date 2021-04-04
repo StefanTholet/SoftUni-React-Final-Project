@@ -6,16 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { compileBlogPost } from '../../services/blogService'
-
 const useStyles = makeStyles({
     "blog-posts-container": {
     }
 })
 
-const regextPatterns = {
-    heading: /<h[0-6]>.*<\/h[0-6]>/gm,
-    content: /<p>.*<\/p>/gm
-}
 
 const BlogPostsPage = ({ history, user }) => {
     const [blogPosts, setPosts] = useState([]);

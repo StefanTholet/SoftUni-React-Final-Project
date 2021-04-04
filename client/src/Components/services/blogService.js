@@ -7,6 +7,7 @@ function compileBlogPost(postData) {
         heading: /<h[0-6]>.+<\/h[0-6]>/gm,
         content: /<p>.+<\/p>/gm
     };
+    if (postData.content) {
     const title = postData.content.match(regextPatterns.heading);
     const content = postData.content.split(regextPatterns.heading);
     if (title) {
@@ -20,15 +21,9 @@ function compileBlogPost(postData) {
        imageUrl: postData.imageUrl,
        _id: postData._id
     }
-    return post
+    return post;
 }
-
-function sendToServer(data) {
-    // const blogContent = compileBody(data);
-    const blogContent = JSON.stringify({ content: data.content, imageUrl: data.imageUrl });
-    return sendRequest('/blog/add-blog-post', blogContent, ['Post', 'application/json']);
 }
-
 
 function getOnePost(postId) {
     return sendRequest(`/blog/posts/${postId}`)
@@ -47,7 +42,6 @@ function updatePostWithComment(postId, comment) {
 
 export {
     compileBlogPost,
-    sendToServer,
     getPosts,
     getOnePost,
     updatePostWithComment

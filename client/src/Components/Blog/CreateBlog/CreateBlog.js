@@ -2,48 +2,67 @@ import HeroImage from '../../HeroImage/HeroImage';
 import TextEditor from './TextEditor/TextEditor';
 import { sendRequest } from '../../services/server';
 import { useState, useEffect } from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import { compileBlogPost } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
+import BlogPost from '../ReadBlogPost/BlogPost';
+import Grid from '@material-ui/core/Grid';
 
 const CreateBlog = (props) => {
-    const [body, setBody] = useState({})
+    const [body, setBody] = useState(null)
+    const [preview, setPreview] = useState(false);
+
+    const [imageUrl, setImageUrl] = useState('');
+    const onImageUrlInputChangeHandler = (e) => {
+        setImageUrl(e.target.value)
+    }
 
     const { user, author, history } = props;
 
-    useEffect(() => {
-        if (!user) {
-            history.push('/login')
-        }
-    })
+    if (!user) {
+        history.push('/login')
+    }
 
-    const submitPost = (event) => {
-        event.preventDefault();
-        const imageUrl = event.target.imageUrl.value;
-        const blogData = JSON.stringify({
-            content: body,
-            imageUrl,
-            creator: user._id,
-            author,
-            createdOn: today
-        });
-        sendRequest('/blog/add-blog-post', blogData, ['POST', 'application/json'])
+    useEffect(() => {
+        if (preview && body) {
+            const post = compileBlogPost(
+                {
+                    content: body,
+                    imageUrl,
+                    author,
+                    createdOn: today,
+                    _id: user._id
+                })
+            setBody(post)
+        }
+    }, [preview])
+
+    const submitPost = (e) => {
+        e.preventDefault();
+        sendRequest('/blog/add-blog-post', { ...body }, ['POST', 'application/json'])
             .then(res => console.log(res))
     }
     const onTextEditorChangeHandler = (e, editor) => {
         const data = editor.getData();
-        // console.log(document.querySelector('.ck-editor__editable'));
         setBody(data)
     }
 
+    const onPreviewPostBtnClick = () => {
+            setPreview((currentPreview) => (!currentPreview))
+    }
+
     return (
-        <>
-            <HeroImage image={'writeBlog2.jpg'} />
-            <TextEditor onChange={onTextEditorChangeHandler}
-                onSubmit={submitPost}
+        <Grid>
+            <HeroImage image={'createBlog.jpg'} />
+            <TextEditor onTextEditorChange={onTextEditorChangeHandler}
+                onSubmit={submitPost} onPreview={onPreviewPostBtnClick}
+                onImageUrlInputChangeHandler={onImageUrlInputChangeHandler}
             />
-            <div>{ReactHtmlParser(body)}</div>;
-        </>
+            {preview ?
+                <BlogPost post={{ ...body }} />
+                : null
+            }
+        </Grid>
     );
 }
 
