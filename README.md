@@ -51,4 +51,7 @@ b) Form - is the booking form component. It combines the following presentationa
 
 #### Services and Logic
 The Services folder contains file with helper functions that are split in the following manner:
-1. 
+1. LocationStyles is a folder containing styles for the site container div. Its purpose is to provide different style configurations based on page location.
+2. blogService.js contains functions that are mostly responsible for fetching and posting blog-related data. 
+3. bookService.js compiles booking data and sends it to the server;
+4. server.js provides a function for server requests.
