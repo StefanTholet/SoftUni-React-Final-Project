@@ -4,9 +4,11 @@ const userSchema = new mongoose.Schema({
     id: mongoose.Types.ObjectId,
     firstName: {
         type: String,
+        required: [true, 'First name is required']
     },
     lastName: {
         type: String,
+        required: [true, 'Last name is required']
     },
     email: {
         type: String,
@@ -15,17 +17,21 @@ const userSchema = new mongoose.Schema({
                 validator: ensureUnique.bind(undefined, ['User', 'email']),
                 message: 'This email address is already taken',
             }
-        ]
+        ],
+        required: [true, 'Email is required']
     },
     password: {
-        type: String
+        type: String,
+        required: [true, 'Password is required']
     },
     blogPosts: {
         type: []
     },
     favoritePosts: {
         type:[]
-    }
+    },
+    bookings: [{ type: mongoose.Types.ObjectId, ref: 'Booking'}],
+    
     // imageUrl: {
     //     type: String
     // },

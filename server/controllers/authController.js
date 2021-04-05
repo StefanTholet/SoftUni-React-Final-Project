@@ -13,7 +13,7 @@ router.get('/user/:userID', (req, res) => {
 
 router.post('/register', async (req, res) => {
     let { firstName, lastName, password, email } = req.body;
-    console.log(req.body)
+    if (firstName && lastName && password && email) {
     try {
         let user = await authService.register({ firstName, lastName, email, password });
         res.json(user);
@@ -21,6 +21,8 @@ router.post('/register', async (req, res) => {
         console.log(error);
         res.json(error);
     }
+    }
+    res.json({message: "All registration fields must be filled"})
 });
 
 router.post('/login', async (req, res) => {

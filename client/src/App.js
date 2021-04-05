@@ -49,7 +49,10 @@ function App(props) {
 
     sendRequest(registrationUrl, JSON.stringify(user), ['Post', 'application/json'])
       .then(userData => {
-        setUser(userData)
+        if (userData._id) {
+          setUser(userData)
+          props.history.push('/users/:userId/profile')
+        }
       })
   }
 
@@ -61,8 +64,10 @@ function App(props) {
     });
     sendRequest('/auth/login', loginDetails, ['POST', 'application/json'])
       .then(userData => {
+        if (userData._id) {
         setUser(userData)
         props.history.push('/users/:userId/profile')
+      }
       })
   }
 

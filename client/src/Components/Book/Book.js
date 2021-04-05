@@ -17,24 +17,10 @@ const Book = (
     })
     const onFormBookingSubmit = (e) => {
         e.preventDefault();
-        reservation(e)
+        reservation(e, user._id)
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
-
-    // const [successState, updateState] = useState(null);
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     reservation(event)
-    //         .then(data => {
-    //             updateState(data);
-    //             setTimeout(() => {
-    //                 updateState(null)
-    //             },2000)
-    //             console.log(successState)
-    //         })
-    // }
     return (
         <>
             <HeroImage image={'bookingHero.jpg'} />

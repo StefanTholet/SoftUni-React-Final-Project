@@ -4,23 +4,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { sendRequest } from '../services/server';
-const GeneralInfo = ({ user, isEditing, editClickHandler }) => {
-    const onFormSubmitHandler = (e) => {
-        e.preventDefault();
-        const body = JSON.stringify({
-            firstName: e.target.firstName.value, 
-            lastName: e.target.lastName.value,
-            email: e.target.email.value 
-        })
-        sendRequest(`/users/${user._id}/edit-profile`, body, ['POST', 'application/json'])
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-    }
+
+const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
+   
     return (
         <Grid className="general-info">
-            <form onSubmit={onFormSubmitHandler}>
+            <form onSubmit={submitClickHandler}>
                 <div className="flex-container">
                     <h2>General Information</h2>
                     <IconButton className="icon-button">
@@ -46,6 +35,7 @@ const GeneralInfo = ({ user, isEditing, editClickHandler }) => {
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
                 </div>
+                <div style={{marginTop: '1rem'}}>
                 <TextField
                     className="general-info-labels"
                     label="Email Address"
@@ -54,6 +44,7 @@ const GeneralInfo = ({ user, isEditing, editClickHandler }) => {
                     variant={isEditing ? "outlined" : "standard"}
                     InputProps={!isEditing ? { readOnly: true } : null}
                 />
+                </div>
                 { isEditing
                     ? <Button type="submit" variant="outlined" style={{ marginTop: '1rem' }}>Apply Changes</Button>
                     : null }

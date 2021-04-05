@@ -21,10 +21,10 @@ function getBookingData(event) {
     })
 }
 
-function reservation(event) {
+function reservation(event, userId) {
     const bookingData = getBookingData(event);
 
-    const endPoint = '/bookings/add-booking';
+    const endPoint = `/users/${userId}/bookings/add`;
     return sendRequest(endPoint, bookingData, ['Post', 'application/json'])
 }
 
