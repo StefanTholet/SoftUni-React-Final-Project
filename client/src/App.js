@@ -11,26 +11,27 @@ import LogIn from './Components/Auth/LogIn';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
-
+import Profile  from './Components/Profile/Profile';
 import { sendRequest } from './Components/services/server';
 import { useState, useEffect } from 'react';
 
 function App(props) {
 
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     if (user) {
       sendRequest(`/auth/user/${user._id}`)
-      .then(res => res.json())
-      .then(user => console.log(user))
-      .catch(err => console.log(err));
+        .then(res => res.json())
+        .then(user => console.log(user))
+        .catch(err => console.log(err));
     }
-  }) 
+  })
 
   let path = props.history.location.pathname;
   let location = path;
   path.includes('read-more') ? location = '/blog-post' : location = path;
+  path.includes('profile') ? location = '/users/profile' : location = path;
   const setStyles = makeStyles({
     'grid-site-container': locationStyles[location]
   });
@@ -61,7 +62,7 @@ function App(props) {
     sendRequest('/auth/login', loginDetails, ['POST', 'application/json'])
       .then(userData => {
         setUser(userData)
-        props.history.push('/create-blog')
+        props.history.push('/users/:userId/profile')
       })
   }
 
@@ -86,7 +87,7 @@ function App(props) {
 
   return (
     <Grid container className={style.App}>
-      <Grid className={classes['grid-site-container']}>
+      <Grid  className={classes['grid-site-container']}>
         <Header menuItems={menuItems()} user={user} />
         <Switch>
           <Route path="/book" component={() => <Book user={user} />}></Route>
@@ -95,6 +96,7 @@ function App(props) {
           <Route path="/create-blog" component={() => <CreateBlog user={user} author={`${user?.firstName} ${user?.lastName}`} />} exact></Route>
           <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} />} exact></Route>
           <Route path="/login" component={() => <LogIn onLoginSubmitForm={onLoginSubmitForm} />} exact></Route>
+          <Route path="/users/:userId/profile" component={() => <Profile user={user} />} exact></Route>
         </Switch>
         {/* </div> */}
 

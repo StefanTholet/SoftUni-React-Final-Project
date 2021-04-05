@@ -11,6 +11,9 @@ const homePage = {
 const defaultSettings = {
   width: '100%',
   minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignContent: 'center'
 }
 
 
@@ -23,6 +26,7 @@ const locationStyles = {
     '/create-blog': defaultSettings,
     '/register': defaultSettings,
     '/login': defaultSettings,
+    '/users/profile': defaultSettings,
 }
 
 export default locationStyles;
