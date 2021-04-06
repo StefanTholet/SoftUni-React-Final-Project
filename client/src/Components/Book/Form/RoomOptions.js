@@ -35,12 +35,12 @@ const RoomOptions = () => {
             </Select>
         </Grid>
         <Grid item>
-            <InputLabel htmlFor="trippleRooms">Tripple</InputLabel>
+            <InputLabel htmlFor="tripleRooms">Triple</InputLabel>
             <Select
                 native
                 inputProps={{
-                    name: 'trippleRooms',
-                    id: 'trippleRooms',
+                    name: 'tripleRooms',
+                    id: 'tripleRooms',
                 }}>
                 <option defaultValue="None">None</option>
                 <option defaultValue="1">1</option>

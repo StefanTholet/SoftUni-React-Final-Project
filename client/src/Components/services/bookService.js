@@ -16,7 +16,7 @@ function getBookingData(event) {
         rooms: {
             single: formData[4],
             double: formData[5],
-            tripple: formData[6],
+            triple: formData[6],
         },
     })
 }
@@ -27,6 +27,8 @@ function reservation(event, userId) {
     const endPoint = `/users/${userId}/bookings/add`;
     return sendRequest(endPoint, bookingData, ['Post', 'application/json'])
 }
+
+
 
 export {
     today,

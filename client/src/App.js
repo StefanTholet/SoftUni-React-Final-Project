@@ -12,8 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
 import Profile  from './Components/Profile/Profile';
-import { sendRequest } from './Components/services/server';
+import { signInUserAndGetUserData, sendRequest } from './Components/services/server';
 import { useState, useEffect } from 'react';
+import UserContext from './Components/Contexts/UserContext';
 
 function App(props) {
 
@@ -23,10 +24,10 @@ function App(props) {
     if (user) {
       sendRequest(`/auth/user/${user._id}`)
         .then(res => res.json())
-        .then(user => console.log(user))
+        .then(user => setUser(user))
         .catch(err => console.log(err));
     }
-  })
+  },[])
 
   let path = props.history.location.pathname;
   let location = path;
@@ -58,17 +59,13 @@ function App(props) {
 
   const onLoginSubmitForm = (e) => {
     e.preventDefault();
-    const loginDetails = JSON.stringify({
-      email: e.target.email.value,
-      password: e.target.password.value
-    });
-    sendRequest('/auth/login', loginDetails, ['POST', 'application/json'])
-      .then(userData => {
-        if (userData._id) {
-        setUser(userData)
-        props.history.push('/users/:userId/profile')
-      }
-      })
+    signInUserAndGetUserData(e)
+    .then(userData => {
+      if (userData._id) {
+      setUser(oldState => userData)
+      props.history.push(`/users/${userData._id}/profile`)
+    }
+    })
   }
 
   const menuItems = () => {
@@ -91,6 +88,7 @@ function App(props) {
   }
 
   return (
+    <UserContext.Provider value={[user, setUser]}>
     <Grid container className={style.App}>
       <Grid  className={classes['grid-site-container']}>
         <Header menuItems={menuItems()} user={user} />
@@ -103,11 +101,11 @@ function App(props) {
           <Route path="/login" component={() => <LogIn onLoginSubmitForm={onLoginSubmitForm} />} exact></Route>
           <Route path="/users/:userId/profile" component={() => <Profile user={user} />} exact></Route>
         </Switch>
-        {/* </div> */}
+       
 
       </Grid>
     </Grid>
-
+    </UserContext.Provider>
   );
 }
 

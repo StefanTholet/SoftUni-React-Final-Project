@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required']
     },
     blogPosts: {
-        type: []
+        type: [{type: mongoose.Types.ObjectId, ref: 'Blog'}]
     },
     favoritePosts: {
         type:[]

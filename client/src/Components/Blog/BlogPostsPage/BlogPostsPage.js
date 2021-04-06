@@ -5,7 +5,7 @@ import { getPosts } from '../../services/blogService';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
-import { compileBlogPost } from '../../services/blogService'
+import { decodeBlogPost } from '../../services/blogService'
 const useStyles = makeStyles({
     "blog-posts-container": {
     }
@@ -21,10 +21,10 @@ const BlogPostsPage = ({ history, user }) => {
         getPosts()
             .then(result => result.json())
             .then(allPosts => {
-                const docodedPosts = allPosts.map(post => {
-                    return compileBlogPost(post);
+                const decodedPosts = allPosts.map(post => {
+                    return decodeBlogPost(post);
                 })
-                setPosts(docodedPosts)
+                setPosts(decodedPosts)
             })
             .catch(err => console.log(err))
     }, []);

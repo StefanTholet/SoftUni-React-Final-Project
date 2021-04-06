@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const BlogPost = ({ post, ref }) => {
+const BlogPost = ({ post}) => {
     const classes = useStyles();
     return (
         <>

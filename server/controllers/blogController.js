@@ -48,6 +48,7 @@ router.get('/posts/:postId', (req, res) => {
     const postId = req.params.postId;
     dbServices.getOne(Blog, postId)
         .then(post => res.json(post))
+        .catch(err => console.log(err))
 })
 
 router.post('/posts/:postId/submit-comment', (req, res) => {

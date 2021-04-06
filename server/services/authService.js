@@ -13,12 +13,12 @@ const register = async ({ firstName, lastName, email, password }) => {
 };
 
 const login = async ({ username, password }) => {
-    let user = await User.findOne({ username }).lean();
+    let user = await User.findOne({ username }).populate('bookings');
     if (!user) throw { message: 'Username or password does not match' };
 
     let isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw { message: 'Username or password does not match' };
-    return user;
+    return user
 };
 
 module.exports = {

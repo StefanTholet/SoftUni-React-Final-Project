@@ -1,8 +1,7 @@
-
 // import { today } from './bookService';
 import { sendRequest } from './server'
 
-function compileBlogPost(postData) {
+function decodeBlogPost(postData) {
     const regextPatterns = {
         heading: /<h[0-6]>.+<\/h[0-6]>/gm,
         content: /<p>.+<\/p>/gm
@@ -40,7 +39,7 @@ function updatePostWithComment(postId, comment) {
 }
 
 export {
-    compileBlogPost,
+    decodeBlogPost,
     getPosts,
     getOnePost,
     updatePostWithComment
