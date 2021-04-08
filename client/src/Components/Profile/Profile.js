@@ -9,6 +9,7 @@ import { uploadEditedGeneralInfo, getUserInfo } from '../services/user';
 import { uploadEditedBooking } from '../services/bookService';
 import { deleteBlogPost, deleteFavoritePost } from '../services/blogService';
 import { withRouter } from 'react-router-dom';
+import Divider from '@material-ui/core/Divider';
 
 const Profile = ({ history }) => {
     const [user, setUser] = useContext(UserContext)
@@ -68,17 +69,19 @@ const Profile = ({ history }) => {
                 editClickHandler={isEditingGeneralInfoHandler}
                 submitClickHandler={onGeneralInfoFormSubmitHandler}
             />
+            <Divider />
             <BookingInfo user={{ ...user }}
                 isEditing={isEditingBookingInfo}
                 editClickHandler={isEditingBookingInfoHandler}
                 submitClickHandler={onBookingInfoFormSubmitHandler}
             />
+            <Divider />
             <BlogsInfo
                 blogBoxClickHandler={blogBoxClickHandler}
                 user={{ ...user }}
                 deleteFavoriteHandler={deleteFavoriteHandler}
                 ownBlogDeleteHandler={ownBlogDeleteHandler} />
-
+            <Divider className="divider" />
         </Grid>
     );
 }

@@ -11,9 +11,8 @@
     }
     .general-info {
         width: 50%;
-        {/* margin: 0 auto; */}
         padding-top: 1rem;
-        border: black 1px solid; 
+        /* border: black 1px solid;  */
     }
 
     .general-info form {
@@ -58,3 +57,6 @@
        justify-self: flex-end;
     }
 
+    .divider {
+        margin-top: 1rem;
+    }

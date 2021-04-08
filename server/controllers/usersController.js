@@ -34,7 +34,9 @@ router.post('/:userId/bookings/add', (req, res) => {
     dbServices.create(Booking ,bookingData)
     .then(response => {
         dbServices.addToDbArray(User, userId, 'bookings', response.id)
-        .then(res.json(response))
+        .then(data => dbServices.getUpdatedUser(userId))
+        .then(updateduser => res.json(updateduser))
+        .catch(err => console.log(err))
     })
         
     .catch(err => console.log(err))

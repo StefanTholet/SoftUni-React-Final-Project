@@ -76,6 +76,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         defaultValue={bookingDetails?.guests.adults}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
+                        autoFocus={isEditing ? true : false}
                     />
                     <TextField
                         className="general-info-labels"

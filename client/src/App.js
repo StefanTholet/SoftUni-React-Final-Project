@@ -96,11 +96,11 @@ function App(props) {
         <Switch>
           <Route path="/book" component={Book} />
           <Route path="/blog" component={BlogPostsPage} exact />
-          <Route path="/blog/read-more/:postId" component={() => <ReadBlogPost user={user} />}></Route>
+          <Route path="/blog/read-more/:postId" component={ReadBlogPost} />
           <Route path="/create-blog" component={CreateBlog} exact />
           <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} />} exact></Route>
           <Route path="/login" component={() => <LogIn onLoginSubmitForm={onLoginSubmitForm} />} exact></Route>
-          <Route path="/users/:userId/profile" component={() => <Profile user={user} />} exact></Route>
+          <Route path="/users/:userId/profile" component={Profile} exact></Route>
         </Switch>
        
 

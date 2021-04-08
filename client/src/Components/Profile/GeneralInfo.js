@@ -4,9 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import { useRef, useEffect } from 'react'
 const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
-   
+    
+    
     return (
         <Grid className="general-info">
             <form onSubmit={submitClickHandler}>
@@ -25,6 +26,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         defaultValue={user.firstName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
+                        autoFocus={isEditing ? true : false}
+
                     />
                     <TextField
                         className="general-info-labels"

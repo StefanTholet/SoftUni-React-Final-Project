@@ -46,7 +46,6 @@ router.post('/get-favorites', (req, res) => {
     // console.log(req.body)
     dbServices.getAllById(Blog, req.body.posts)
         .then(data => {
-            console.log(data)
             res.json(data)})
         .catch(err => console.log(err))
 })
