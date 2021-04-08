@@ -1,17 +1,18 @@
 import HeroImage from '../../HeroImage/HeroImage';
 import TextEditor from './TextEditor/TextEditor';
-import { sendRequest } from '../../services/server';
-import { useState, useEffect, useRef } from 'react';
-import { decodeBlogPost } from '../../services/blogService';
+
+import { useState, useEffect, useRef, useContext } from 'react';
+import UserContext from '../../Contexts/UserContext';
+import { addBlogPost, decodeBlogPost } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
 import BlogPost from '../ReadBlogPost/BlogPost';
 import Grid from '@material-ui/core/Grid';
 
 
-const CreateBlog = (props) => {
-    const { user, author, history } = props;
-
+const CreateBlog = ({ history }) => {
+    const [user, setUser] = useContext(UserContext);
+    const  author  = `${user.firstName} ${user.lastName}`;
     if (!user) {
         history.push('/login')
     }
@@ -40,14 +41,17 @@ const CreateBlog = (props) => {
             imageUrl,
             author,
             createdOn: today,
-            _id: user._id
+            userId: user._id
         }
     }
 
     const submitPost = (e) => {
         e.preventDefault();
-        sendRequest('/blog/add-blog-post', JSON.stringify(compileBlogPost()), ['POST', 'application/json'])
-            .then(res => console.log(res))
+        const body = compileBlogPost();
+        addBlogPost(body)
+            .then(updatedUser =>{
+                console.log(updatedUser)    
+                setUser(updatedUser)})
     }
     const onTextEditorChangeHandler = (e, editor) => {
         const data = editor.getData();

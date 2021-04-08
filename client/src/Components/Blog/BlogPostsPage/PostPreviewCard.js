@@ -46,12 +46,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// 
 
-const PostPreviewCard = ({ blogData, user }) => {
+
+const PostPreviewCard = ({ blogData, user, setUser }) => {
+    //TODO
     // set useEffect to check if blogId can be found inside user.favoritePosts and set favorite to true if so
     // add check to click handler to see if favorite is true and return if so
-    // change color of icon to reflect the status
+
     const [isFavorite, setFavorite] = useState(null)
 
     const { title, createdOnDate, imageUrl, altImage, content, _id } = blogData;
@@ -59,27 +60,27 @@ const PostPreviewCard = ({ blogData, user }) => {
     useEffect(() => {
         setFavorite(user.favoritePosts.includes(_id))
     }, [])
- 
     const classes = useStyles();
 
-    const addPostToFavorites = (id) => {
+    const addPostToFavorites = (e, _id) => {
+        e.preventDefault()
         if (isFavorite) {
             console.log('already in favorites')
-            sendRequest(`/blog/${id}/remove-post-from-favorites`,
-                JSON.stringify({ userID: user._id }),
+            sendRequest(`/blog/${_id}/remove-post-from-favorites`,
+                JSON.stringify({ userId: user._id }),
                 ['POST', 'application/json'])
                 .then(res => {
-                    console.log(res)
+                    setUser(res)
                     setFavorite(false)
                 })
                 .catch(err => console.log(err))
             return;
         }
-        sendRequest(`/blog/${id}/add-post-to-favorites`,
-            JSON.stringify({ userID: user._id }),
+        sendRequest(`/blog/${_id}/add-post-to-favorites`,
+            JSON.stringify({ userId: user._id }),
             ['POST', 'application/json'])
             .then(res => {
-                console.log(res)
+                setUser(res)
                 setFavorite(true)
             })
             .catch(err => console.log(err))
@@ -109,7 +110,10 @@ const PostPreviewCard = ({ blogData, user }) => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing className={classes['card-footer']}>
-                    <IconButton aria-label="add to favorites" onClick={() => addPostToFavorites(_id)}>
+                    <IconButton aria-label="add to favorites" onClick={(e) => {
+                        e.preventDefault()    
+                        addPostToFavorites(e, _id)
+                    }}>
                         <FavoriteIcon style={isFavorite ? { color: '#f50057' } : null} />
                     </IconButton>
                     <Button component={Link} to={`/blog/read-more/${_id}`}

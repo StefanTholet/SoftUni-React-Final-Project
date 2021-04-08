@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
    
-    const bookingDetails = user.bookings[0];
+    const bookingDetails = user?.bookings[0];
     const saveNewBookingDetails = (e) => {
         e.preventDefault();
         const newDetails = {

@@ -1,5 +1,5 @@
+const User = require('../DB/models/User')
 const Booking = require('../DB/models/Booking');
-
 function create(Model, details) {
     let model = new Model(details);
     return model.save();
@@ -10,32 +10,46 @@ function getAll(Model) {
 }
 
 function getOne(Model, id) {
-    return Model.findById(id).populate('bookings').lean();
+    return Model.findById(id).lean();
 }
 
-function addToDbArray(Document, id, arrayName, element) {
-    return Document.updateOne(
+function addToDbArray(Model, id, arrayName, element) {
+    return Model.updateOne(
         { _id: id },
         { $push: { [arrayName]: element } }
     ).lean()
 }
 
-function removeFromDbArray(Document, id, arrayName, element) {
-    return Document.updateOne(
+function removeFromDbArray(Model, id, arrayName, element) {
+    return Model.updateOne(
         { _id: id },
         { $pull: { [arrayName]: element } }
     ).lean()
 }
 
-function updateDoc(Document, id, body) {
-    return Document.findOneAndUpdate({ _id: id }, body, { new: true })
+function updateDoc(Model, id, body) {
+    return Model.findOneAndUpdate({ _id: id }, body, { new: true }).populate('bookings').populate('blogPosts').lean()
 }
 
+function deleteDoc(Model, _id) { 
+    return Model.deleteOne({_id})
+}
+
+function getUpdatedUser (_id) {
+    return User.findById(_id).populate('bookings').populate('blogPosts').lean()
+}
+
+function getAllById(Model, ids) {
+   return Model.find({ _id: { $in: [...ids]}})
+}
 module.exports = {
     create,
     getAll,
     getOne,
     addToDbArray,
     removeFromDbArray,
-    updateDoc
+    updateDoc,
+    deleteDoc,
+    getUpdatedUser,
+    getAllById
 }

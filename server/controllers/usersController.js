@@ -45,5 +45,14 @@ router.get('/:userId/get-info', (req, res) => {
     .then(user => res.json(user))
     .catch(err => console.log(err))
 })
+ router.post('/:userId/delete-favorite-post', (req, res) => {
+     const { blogId } = req.body;
+     const { userId } = req.params;
+     dbServices.removeFromDbArray(User, userId, 'favoritePosts', blogId)
+        .then(dbServices.getUpdatedUser(userId))
+        .then(updateduser => res.json(updateduser))
+        .catch(err => console.log(err))
+ })
+
 
 module.exports = router;

@@ -1,20 +1,21 @@
 import Grid from '@material-ui/core/Grid';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import UserContext from '../Contexts/UserContext';
 import GeneralInfo from './GeneralInfo';
 import BookingInfo from './BookingInfo';
 import BlogsInfo from './BlogsInfo';
 import './Profile.css';
-import {
-    uploadEditedGeneralInfo,
-    uploadEditedBooking,
-    sendRequest,
-    getUserInfo
-} from '../services/server';
+import { uploadEditedGeneralInfo, getUserInfo } from '../services/user';
+import { uploadEditedBooking } from '../services/bookService';
+import { deleteBlogPost, deleteFavoritePost } from '../services/blogService';
+import { withRouter } from 'react-router-dom';
 
-
-const Profile = () => {
+const Profile = ({ history }) => {
     const [user, setUser] = useContext(UserContext)
+    console.log(user)
+    if (!user) {
+        history.push('/login')
+    }
 
     const [isEditingGeneralInfo, setisEditingGeneralInfo] = useState(false);
     const [isEditingBookingInfo, setisEditingBookingInfo] = useState(false);
@@ -26,7 +27,7 @@ const Profile = () => {
     const onGeneralInfoFormSubmitHandler = (e) => {
         e.preventDefault();
         uploadEditedGeneralInfo(e, user._id)
-            .then(res => setUser(res))
+            .then(updatedUser => setUser(updatedUser))
             .catch(err => console.log(err))
     }
 
@@ -39,14 +40,30 @@ const Profile = () => {
             .then(res => {
                 if (user) {
                     getUserInfo(user._id)
-                    .then(res => setUser(res));
+                        .then(updatedUser => setUser(updatedUser));
                 }
             })
             .catch(err => console.log(err))
     }
+
+    const blogBoxClickHandler = (id) => {
+        history.push(`/blog/read-more/${id}`)
+    }
+
+    const ownBlogDeleteHandler = (blogId) => {
+        deleteBlogPost(blogId, user._id)
+            .then(updatedUser => setUser(updatedUser))
+    }
+
+    const deleteFavoriteHandler = (blogId) => {
+        deleteFavoritePost(blogId, user._id)
+        .then(updatedUser => setUser(updatedUser))
+        .catch(err => console.log(err))
+    }
     return (
         <Grid container className="profile-container" style={{}}>
-            <GeneralInfo user={{ ...user }}
+            <GeneralInfo
+                user={{ ...user }}
                 isEditing={isEditingGeneralInfo}
                 editClickHandler={isEditingGeneralInfoHandler}
                 submitClickHandler={onGeneralInfoFormSubmitHandler}
@@ -56,10 +73,14 @@ const Profile = () => {
                 editClickHandler={isEditingBookingInfoHandler}
                 submitClickHandler={onBookingInfoFormSubmitHandler}
             />
-            <BlogsInfo />
+            <BlogsInfo
+                blogBoxClickHandler={blogBoxClickHandler}
+                user={{ ...user }}
+                deleteFavoriteHandler={deleteFavoriteHandler}
+                ownBlogDeleteHandler={ownBlogDeleteHandler} />
 
         </Grid>
     );
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -12,7 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
 import Profile  from './Components/Profile/Profile';
-import { signInUserAndGetUserData, sendRequest } from './Components/services/server';
+import {  sendRequest } from './Components/services/server';
+import { signInUserAndGetUserData } from './Components/services/user';
 import { useState, useEffect } from 'react';
 import UserContext from './Components/Contexts/UserContext';
 
@@ -63,7 +64,7 @@ function App(props) {
     .then(userData => {
       if (userData._id) {
       setUser(oldState => userData)
-      props.history.push(`/users/${userData._id}/profile`)
+      // props.history.push(`/users/${userData._id}/profile`)
     }
     })
   }
@@ -93,10 +94,10 @@ function App(props) {
       <Grid  className={classes['grid-site-container']}>
         <Header menuItems={menuItems()} user={user} />
         <Switch>
-          <Route path="/book" component={() => <Book user={user} />}></Route>
-          <Route path="/blog" component={() => <BlogPostsPage user={user} />} exact></Route>
+          <Route path="/book" component={Book} />
+          <Route path="/blog" component={BlogPostsPage} exact />
           <Route path="/blog/read-more/:postId" component={() => <ReadBlogPost user={user} />}></Route>
-          <Route path="/create-blog" component={() => <CreateBlog user={user} author={`${user?.firstName} ${user?.lastName}`} />} exact></Route>
+          <Route path="/create-blog" component={CreateBlog} exact />
           <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} />} exact></Route>
           <Route path="/login" component={() => <LogIn onLoginSubmitForm={onLoginSubmitForm} />} exact></Route>
           <Route path="/users/:userId/profile" component={() => <Profile user={user} />} exact></Route>

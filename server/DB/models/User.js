@@ -27,9 +27,7 @@ const userSchema = new mongoose.Schema({
     blogPosts: {
         type: [{type: mongoose.Types.ObjectId, ref: 'Blog'}]
     },
-    favoritePosts: {
-        type:[]
-    },
+    favoritePosts: [{ type: mongoose.Types.ObjectId, ref: 'Booking'}],
     bookings: [{ type: mongoose.Types.ObjectId, ref: 'Booking'}],
     
     // imageUrl: {

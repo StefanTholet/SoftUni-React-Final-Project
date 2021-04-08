@@ -1,18 +1,21 @@
 import HeroImage from '../../HeroImage/HeroImage';
 import PostPreviewCard from './PostPreviewCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getPosts } from '../../services/blogService';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { decodeBlogPost } from '../../services/blogService'
+import UserContext from '../../Contexts/UserContext';
 const useStyles = makeStyles({
     "blog-posts-container": {
     }
 })
 
 
-const BlogPostsPage = ({ history, user }) => {
+const BlogPostsPage = ({ history }) => {
+    
+    const [user, setUser] = useContext(UserContext)
     const [blogPosts, setPosts] = useState([]);
     useEffect(() => {
         if (!user) {
@@ -33,7 +36,7 @@ const BlogPostsPage = ({ history, user }) => {
         <>
             <HeroImage image={'blog.jpg'} />
             <Grid container direction="column" alignItems="center" className={classes['blog-posts-container']}>
-                {blogPosts.map(post => <PostPreviewCard blogData={post} user={user}/>
+                {blogPosts.map(post => <PostPreviewCard blogData={post} user={user} setUser={setUser}/>
 
                 )}
             </Grid>
