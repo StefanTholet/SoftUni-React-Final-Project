@@ -3,6 +3,7 @@ import TextEditor from './TextEditor/TextEditor';
 
 import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../../Contexts/UserContext';
+import TokenContext from '../../Contexts/TokenContext'
 import { addBlogPost, decodeBlogPost } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
@@ -12,10 +13,14 @@ import Grid from '@material-ui/core/Grid';
 
 const CreateBlog = ({ history }) => {
     const [user, setUser] = useContext(UserContext);
-    const  author  = `${user.firstName} ${user.lastName}`;
-    if (!user) {
-        history.push('/login')
-    }
+    const  author  = `${user?.firstName} ${user?.lastName}`;
+    const [ token ] = useContext(TokenContext)
+
+    useEffect(() => {
+        if (!user && !token) {
+            history.push('/login')
+        }
+    })
     const [body, setBody] = useState('')
     const [preview, setPreview] = useState(false);
     const [post, setPost] = useState({})
@@ -49,8 +54,7 @@ const CreateBlog = ({ history }) => {
         e.preventDefault();
         const body = compileBlogPost();
         addBlogPost(body)
-            .then(updatedUser =>{
-                console.log(updatedUser)    
+            .then(updatedUser =>{   
                 setUser(updatedUser)})
     }
     const onTextEditorChangeHandler = (e, editor) => {

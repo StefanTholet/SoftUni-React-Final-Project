@@ -1,22 +1,28 @@
 import Grid from '@material-ui/core/Grid';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect} from 'react';
 import UserContext from '../Contexts/UserContext';
+import TokenContext from '../Contexts/TokenContext'
 import GeneralInfo from './GeneralInfo';
 import BookingInfo from './BookingInfo';
 import BlogsInfo from './BlogsInfo';
 import './Profile.css';
-import { uploadEditedGeneralInfo, getUserInfo } from '../services/user';
+import { uploadEditedGeneralInfo, } from '../services/user';
 import { uploadEditedBooking } from '../services/bookService';
 import { deleteBlogPost, deleteFavoritePost } from '../services/blogService';
 import { withRouter } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 
+
 const Profile = ({ history }) => {
     const [user, setUser] = useContext(UserContext)
-    // console.log(user)
-    if (!user) {
-        history.push('/login')
-    }
+   
+    const [ token ] = useContext(TokenContext)
+
+    useEffect(() => {
+        if (!user && !token) {
+            history.push('/login')
+        }
+    })
 
     const [isEditingGeneralInfo, setisEditingGeneralInfo] = useState(false);
     const [isEditingBookingInfo, setisEditingBookingInfo] = useState(false);
@@ -42,7 +48,6 @@ const Profile = ({ history }) => {
     const onBookingInfoFormSubmitHandler = (newBookingDetails) => {
         uploadEditedBooking(newBookingDetails, user._id, user.bookings[0]._id)
         .then(updatedUser => {
-            console.log(`woo${updatedUser}`)
             setUser(updatedUser)
             setisEditingBookingInfo(false)
         })
@@ -63,6 +68,7 @@ const Profile = ({ history }) => {
             .then(updatedUser => setUser(updatedUser))
             .catch(err => console.log(err))
     }
+
     return (
         <Grid container className="profile-container" style={{}}>
             <GeneralInfo
@@ -72,7 +78,8 @@ const Profile = ({ history }) => {
                 submitClickHandler={onGeneralInfoFormSubmitHandler}
             />
             <Divider />
-            <BookingInfo user={{ ...user }}
+            <BookingInfo 
+                user={{...user}}
                 isEditing={isEditingBookingInfo}
                 editClickHandler={isEditingBookingInfoHandler}
                 submitClickHandler={onBookingInfoFormSubmitHandler}

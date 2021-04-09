@@ -14,7 +14,6 @@ function sendRequest(endPoint, body, options) {
         body: body
     }).then(res => res.json())
         .then(data => {
-            console.log(data)
             return data;
         })
         .catch(err => console.log(err));

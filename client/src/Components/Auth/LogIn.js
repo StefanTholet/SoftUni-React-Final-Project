@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LogIn = ({ onLoginSubmitForm }) => {
+const Logn = ({ onLoginSubmitForm }) => {
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs">
@@ -89,4 +89,4 @@ const LogIn = ({ onLoginSubmitForm }) => {
     );
 }
 
-export default LogIn;
+export default Logn;

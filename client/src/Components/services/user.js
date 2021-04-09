@@ -21,7 +21,6 @@ function registerUser(e) {
     const user = { firstName, lastName, email, password }
     const registrationUrl = '/auth/register';
     return sendRequest(registrationUrl, JSON.stringify(user), ['Post', 'application/json'])
-
 }
 
 function signInUserAndGetUserData(e) {
@@ -42,5 +41,4 @@ export {
     signInUserAndGetUserData,
     registerUser,
     getUserInfo,
-
 }

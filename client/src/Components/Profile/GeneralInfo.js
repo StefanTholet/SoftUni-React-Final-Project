@@ -4,10 +4,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { useEffect } from 'react';
 
 const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
-    console.log('refresh general info')
-    console.log(user)
+    useEffect(() => {
+    }, [user])
     const { imageUrl, firstName, lastName, email } = user;
 
     return (
@@ -24,7 +25,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Avatar Image URL"
                         name="imageUrl"
-                        defaultValue={imageUrl}
+                        value={imageUrl}
+                        defaultValue=' '
                         variant="outlined"
                         autoFocus
                         style={{marginBottom: '1rem'}}
@@ -36,7 +38,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="First Name"
                         name="firstName"
-                        defaultValue={firstName}
+                        defaultValue=' '
+                        value={firstName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
@@ -44,7 +47,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Last Name"
                         name="lastName"
-                        defaultValue={lastName}
+                        defaultValue=' '
+                        value={lastName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
@@ -54,7 +58,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Email Address"
                         name="email"
-                        defaultValue={email}
+                        defaultValue=' '
+                        value={email}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />

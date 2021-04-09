@@ -32,7 +32,7 @@ const Header = () => {
         }
         return {
             onLogOut: () => setUser(null),
-            menuItems: ['Book Now|', 'Blog|', 'Add Blog Post|', 'Logout'],
+            menuItems: ['Book Now|', 'Blog|', 'Add Blog Post|', 'Logout',],
             links: {
                 'Book Now|': '/book',
                 'Blog|': '/blog',

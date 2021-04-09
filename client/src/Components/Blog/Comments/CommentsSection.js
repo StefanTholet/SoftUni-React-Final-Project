@@ -36,7 +36,7 @@ const CommentsSection = ({ post, match, user }) => {
   const showCommentBox = () => {
     setCommentDecision(!wantsToComment);
   }
-  const avatar = user.imageUrl;
+  const avatar = user?.imageUrl;
   const submitComment = (e) => {
     e.preventDefault();
     const { postId } = match.params;

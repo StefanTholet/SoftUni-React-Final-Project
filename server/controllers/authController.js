@@ -6,7 +6,7 @@ const dbServices = require('../services/db');
 const User = require('../DB/models/User');
 
 router.get('/user/:userID', (req, res) => {
-    dbServices.getOne(User, req.params.userID)
+    dbServices.getUpdatedUser(req.params.userID)
     .then(user => res.json(user))
     .catch(err => console.log(err))
 })

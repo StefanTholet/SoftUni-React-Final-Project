@@ -8,6 +8,7 @@ import { decodeBlogPost } from '../../services/blogService';
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import UserContext from '../../Contexts/UserContext';
+import TokenContext from '../../Contexts/TokenContext'
 
 
 const ReadBlogPost = (props) => {
@@ -15,8 +16,10 @@ const ReadBlogPost = (props) => {
     const [post, setPost] = useState({});
     const { match, history } = props;
     const [user] = useContext(UserContext);
+    const [ token ] = useContext(TokenContext)
+
     useEffect(() => {
-        if (!user) {
+       if (!user && !token) {
             history.push('/login')
         }
         const { postId } = match.params;
@@ -32,7 +35,7 @@ const ReadBlogPost = (props) => {
     return ( 
             <Grid container justifyContent="middle">
                 <HeroImage image={`/blog.jpg`} />
-                <BlogPost post={post} imageUrl={user.imageUrl}/>
+                <BlogPost post={post} imageUrl={user?.imageUrl}/>
                 <CommentsSection post={post} user={user}/>
             </Grid> 
     );

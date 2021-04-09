@@ -4,16 +4,17 @@ import { withRouter } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
 import { reservation } from '../services/bookService';
 import UserContext from '../Contexts/UserContext';
-
+import TokenContext from '../Contexts/TokenContext'
 
 
 const Book = (
     { history }
 ) => {
     const [user, setUser] = useContext(UserContext)
+    const [ token ] = useContext(TokenContext)
 
     useEffect(() => {
-        if (!user) {
+        if (!user && !token) {
             history.push('/login')
         }
     })

@@ -13,15 +13,17 @@ const BlogsInfo = (
     ownBlogDeleteHandler,
     deleteFavoriteHandler
   }) => {
-  console.log('refresh')
+    
+    // console.log(user)
+
   const [favoriteBlogs, setFavoriteBlogs] = useState()
   const { blogPosts: ownBlogs, favoritePosts } = user;
 
   useEffect(() => {
     getFavouritePosts({ posts: favoritePosts })
       .then(listOfFavorites => setFavoriteBlogs(listOfFavorites))
-  }, [])
-  console.log(favoriteBlogs)
+  }, [user])
+  
   return (
     <Grid className="general-info">
       <form>

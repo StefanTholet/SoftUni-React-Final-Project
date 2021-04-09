@@ -58,8 +58,10 @@ const PostPreviewCard = ({ blogData, user, setUser }) => {
     const { title, createdOnDate, imageUrl, altImage, content, _id } = blogData;
 
     useEffect(() => {
+        if (user) {
         setFavorite(user.favoritePosts.includes(_id))
-    }, [])
+    }
+    }, [user])
     const classes = useStyles();
 
     const addPostToFavorites = (e, _id) => {
