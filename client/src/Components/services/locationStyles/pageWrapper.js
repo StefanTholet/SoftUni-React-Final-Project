@@ -8,7 +8,7 @@ const homePage = {
     backgroundSize: 'cover',
   }
 
-const defaultSettings = {
+const defaultStyling = {
   width: '100%',
   minHeight: '100vh',
   display: 'flex',
@@ -18,15 +18,11 @@ const defaultSettings = {
 
 
 
-const locationStyles = {
-    '/book':defaultSettings,
-    '/': homePage,
-    '/blog': defaultSettings,
-    '/blog-post': defaultSettings,
-    '/create-blog': defaultSettings,
-    '/register': defaultSettings,
-    '/login': defaultSettings,
-    '/users/profile': defaultSettings,
+const locationStyles = (location) => {
+    if (location === '/') {
+      return homePage;
+    }
+    return defaultStyling;
 }
 
 export default locationStyles;

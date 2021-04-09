@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 })
 
-const CommentsSection = ({ post, avatar, match, user }) => {
+const CommentsSection = ({ post, match, user }) => {
 
   const [wantsToComment, setCommentDecision] = useState(false);
   const [comments, setComments] = useState(null);
@@ -31,21 +31,19 @@ const CommentsSection = ({ post, avatar, match, user }) => {
     setComments(post.comments)  
   })
 
-  console.log(post)
-
   const classes = useStyles();
 
   const showCommentBox = () => {
     setCommentDecision(!wantsToComment);
   }
-
+  const avatar = user.imageUrl;
   const submitComment = (e) => {
     e.preventDefault();
     const { postId } = match.params;
     const content = e.target.comment.value;
     const comment = {
       author: `${user.firstName} ${user.lastName}`,
-      avatar: user.imageUrl,
+      avatar,
       content,
       postedOnDate: today
     }

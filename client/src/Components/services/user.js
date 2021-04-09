@@ -12,6 +12,18 @@ function uploadEditedGeneralInfo(e, id) {
     .catch(err => console.log(err));
 }
 
+function registerUser(e) {
+    const target = e.target;
+    const firstName = target.firstName.value;
+    const lastName = target.lastName.value;
+    const email = target.email.value;
+    const password = target.password.value;
+    const user = { firstName, lastName, email, password }
+    const registrationUrl = '/auth/register';
+    return sendRequest(registrationUrl, JSON.stringify(user), ['Post', 'application/json'])
+
+}
+
 function signInUserAndGetUserData(e) {
     const loginDetails = JSON.stringify({
         email: e.target.email.value,
@@ -28,5 +40,7 @@ function getUserInfo(id) {
 export {
     uploadEditedGeneralInfo,
     signInUserAndGetUserData,
-    getUserInfo
+    registerUser,
+    getUserInfo,
+
 }

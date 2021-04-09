@@ -5,22 +5,43 @@ import Button from '@material-ui/core/Button'
 import { NavLink, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { useContext } from 'react';
+import UserContext from '../Contexts/UserContext';
 
-const Header = (props) => {
-    const { menuItems } = props;
-    const { user } = props;
+const useStyles = makeStyles({
+    'nav-links': {
+        color: 'black',
+        fontFamily: 'Helvetica',
+        textTransform: 'none',
+    },
+    'nav-bar': {
+        backgroundColor: 'white',
 
-    const useStyles = makeStyles({
-        'nav-links': {
-            color: 'black',
-            fontFamily: 'Helvetica',
-            textTransform: 'none',
-        },
-        'nav-bar': {
-            backgroundColor: 'white',
+    }
+});
 
+const Header = () => {
+    const [user, setUser] = useContext(UserContext);
+
+    const menuItems = (() => {
+        if (!user) {
+            return {
+                menuItems: ['Register|', 'Login'],
+                links: { 'Register|': '/register', 'Login': '/login' }
+            }
         }
-    });
+        return {
+            onLogOut: () => setUser(null),
+            menuItems: ['Book Now|', 'Blog|', 'Add Blog Post|', 'Logout'],
+            links: {
+                'Book Now|': '/book',
+                'Blog|': '/blog',
+                'Add Blog Post|': '/create-blog',
+                'Logout': ''
+            }
+        }
+    })();
+
     const classes = useStyles()
 
     return (
@@ -35,7 +56,7 @@ const Header = (props) => {
                         </Typography>
                             </Button>
                         </Grid>
-                        {user 
+                        {user
                             ? <Grid item>
                                 <Button component={NavLink} to={`/users/${user._id}/profile`} >
                                     <Typography className={classes['nav-links']} variant="h5">
