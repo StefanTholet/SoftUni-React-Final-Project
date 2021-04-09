@@ -17,7 +17,8 @@ function decodeBlogPost(postData) {
         author: postData.author,
         createdOn: postData.createdOn,
         imageUrl: postData.imageUrl,
-        _id: postData._id
+        _id: postData._id,
+        comments: postData.comments
     }
     return post;
 }

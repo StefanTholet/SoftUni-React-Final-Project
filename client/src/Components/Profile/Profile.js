@@ -13,7 +13,7 @@ import Divider from '@material-ui/core/Divider';
 
 const Profile = ({ history }) => {
     const [user, setUser] = useContext(UserContext)
-    console.log(user)
+    // console.log(user)
     if (!user) {
         history.push('/login')
     }
@@ -28,7 +28,10 @@ const Profile = ({ history }) => {
     const onGeneralInfoFormSubmitHandler = (e) => {
         e.preventDefault();
         uploadEditedGeneralInfo(e, user._id)
-            .then(updatedUser => setUser(updatedUser))
+            .then(updatedUser => {
+                setUser(updatedUser)
+                setisEditingGeneralInfo(false)
+            })
             .catch(err => console.log(err))
     }
 
@@ -38,13 +41,12 @@ const Profile = ({ history }) => {
 
     const onBookingInfoFormSubmitHandler = (newBookingDetails) => {
         uploadEditedBooking(newBookingDetails, user._id, user.bookings[0]._id)
-            .then(res => {
-                if (user) {
-                    getUserInfo(user._id)
-                        .then(updatedUser => setUser(updatedUser));
-                }
-            })
-            .catch(err => console.log(err))
+        .then(updatedUser => {
+            console.log(`woo${updatedUser}`)
+            setUser(updatedUser)
+            setisEditingBookingInfo(false)
+        })
+        .catch(err => console.log(err))
     }
 
     const blogBoxClickHandler = (id) => {
@@ -58,8 +60,8 @@ const Profile = ({ history }) => {
 
     const deleteFavoriteHandler = (blogId) => {
         deleteFavoritePost(blogId, user._id)
-        .then(updatedUser => setUser(updatedUser))
-        .catch(err => console.log(err))
+            .then(updatedUser => setUser(updatedUser))
+            .catch(err => console.log(err))
     }
     return (
         <Grid container className="profile-container" style={{}}>

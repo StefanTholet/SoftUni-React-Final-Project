@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const BlogPost = ({ post}) => {
+const BlogPost = ({ post, imageUrl }) => {
     const classes = useStyles();
     return (
         <>
@@ -48,7 +48,7 @@ const BlogPost = ({ post}) => {
                 <Typography variant='h3' className={classes['post-title']}>
                     {ReactHtmlParser(post.title)}
                 </Typography>
-                <AuthorAvatar author={post.author} createdOn={post.createdOn} />
+                <AuthorAvatar image={imageUrl} author={post.author} createdOn={post.createdOn} />
                 <CardMedia
                     className={classes.media}
                     image={post.imageUrl}
@@ -59,7 +59,8 @@ const BlogPost = ({ post}) => {
                     {ReactHtmlParser(post.content)}
                 </Typography>
                 <Divider className={classes.divider} variant="middle" />
-                <Typography style={{ marginRight: '36%' }}>Originally published at <Link to="/" className='site-anchor'>Hotel Horizont</Link> on {post.createdOn}.</Typography>
+                <Typography style={{marginRight: 'auto', marginLeft: '1rem'}}>
+                    Originally published at <Link to="/" className='site-anchor'>Hotel Horizont</Link> on {post.createdOn}.</Typography>
                 <Divider className={classes.divider} variant="middle" />
             </Grid>
         </>

@@ -58,18 +58,16 @@ router.get('/all-posts', (req, res) => {
 
 router.get('/posts/:postId', (req, res) => {
     const postId = req.params.postId;
-    dbServices.getOne(Blog, postId)
+    dbServices.getOneWithComments(postId)
         .then(post => res.json(post))
         .catch(err => console.log(err))
 })
 
 router.post('/posts/:postId/submit-comment', (req, res) => {
-    const id = req.params.postId;
-    console.log(id)
-    const element = req.body;
-    dbServices.addToDbArray(Blog, id, 'comments', element)
-        .then(dbServices.getUpdatedUser(userId)
-            .then(updatedUser => res.json(updatedUser)))
+    const blogId = req.params.postId;
+    const comment = req.body;
+    dbServices.addToDbArray(Blog, blogId, 'comments', comment)
+            .then(result => res.json(result))
         .catch(err => console.log(err))
 })
 

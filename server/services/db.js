@@ -1,5 +1,6 @@
 const User = require('../DB/models/User')
 const Booking = require('../DB/models/Booking');
+const Blog = require('../DB/models/Blog')
 function create(Model, details) {
     let model = new Model(details);
     return model.save();
@@ -11,6 +12,9 @@ function getAll(Model) {
 
 function getOne(Model, id) {
     return Model.findById(id).lean();
+}
+function getOneWithComments(blogId) {
+    return Blog.findById(blogId).populate('comments').lean();
 }
 
 function addToDbArray(Model, id, arrayName, element) {
@@ -42,6 +46,8 @@ function getUpdatedUser (_id) {
 function getAllById(Model, ids) {
    return Model.find({ _id: { $in: [...ids]}})
 }
+
+
 module.exports = {
     create,
     getAll,
@@ -51,5 +57,6 @@ module.exports = {
     updateDoc,
     deleteDoc,
     getUpdatedUser,
-    getAllById
+    getAllById,
+    getOneWithComments
 }

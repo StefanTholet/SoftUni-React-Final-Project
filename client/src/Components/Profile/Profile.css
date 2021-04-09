@@ -19,7 +19,8 @@
         padding-bottom: 1.5rem;
         min-width: 40%;
         width: 100%;
-        display: flex; 
+        display: flex;
+        flex-wrap: wrap; 
         flex-direction: column;
         align-items: center;
     }
@@ -28,6 +29,10 @@
             width: 100%;
             justify-content: center;   
             flex-wrap: wrap;      
+    }
+
+    .general-info-labels:first-child {
+        margin-right: 2rem;
     }
 
     .general-info-labels:last-child {
@@ -60,3 +65,5 @@
     .divider {
         margin-top: 1rem;
     }
+
+    

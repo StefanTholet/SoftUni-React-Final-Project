@@ -30,9 +30,9 @@ const userSchema = new mongoose.Schema({
     favoritePosts: [{ type: mongoose.Types.ObjectId, ref: 'Booking'}],
     bookings: [{ type: mongoose.Types.ObjectId, ref: 'Booking'}],
     
-    // imageUrl: {
-    //     type: String
-    // },
+    imageUrl: {
+        type: String
+    },
     // likes: []
 })
 

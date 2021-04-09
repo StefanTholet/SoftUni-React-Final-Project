@@ -8,6 +8,8 @@ import { decodeBlogPost } from '../../services/blogService';
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
 import UserContext from '../../Contexts/UserContext';
+
+
 const ReadBlogPost = (props) => {
     //TODO force ReadBlogPost component to re-render so that newest comment is shown right away
     const [post, setPost] = useState({});
@@ -24,12 +26,14 @@ const ReadBlogPost = (props) => {
                 setPost(decodeBlogPost(res));
             })
             .catch(err => console.log(err))
-    }, []);
+    }, 
+    []);
+
     return ( 
             <Grid container justifyContent="middle">
                 <HeroImage image={`/blog.jpg`} />
-                <BlogPost post={post} />
-                <CommentsSection post={post} />
+                <BlogPost post={post} imageUrl={user.imageUrl}/>
+                <CommentsSection post={post} user={user}/>
             </Grid> 
     );
 }

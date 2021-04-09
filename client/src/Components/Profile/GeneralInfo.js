@@ -4,10 +4,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { useRef, useEffect } from 'react'
+
 const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
-    
-    
+    console.log('refresh general info')
+    console.log(user)
+    const { imageUrl, firstName, lastName, email } = user;
+
     return (
         <Grid className="general-info">
             <form onSubmit={submitClickHandler}>
@@ -17,40 +19,49 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         <EditIcon onClick={editClickHandler} />
                     </IconButton>
                 </div>
-                <Avatar style={{ marginBottom: '1rem' }} />
+                { isEditing ? 
+                    <TextField
+                        className="general-info-labels"
+                        label="Avatar Image URL"
+                        name="imageUrl"
+                        defaultValue={imageUrl}
+                        variant="outlined"
+                        autoFocus
+                        style={{marginBottom: '1rem'}}
+                    />
+                : <Avatar style={{ marginBottom: '1rem' }} src={imageUrl} />
+                }
                 <div className="info-box-container">
                     <TextField
                         className="general-info-labels"
                         label="First Name"
                         name="firstName"
-                        defaultValue={user.firstName}
+                        defaultValue={firstName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
-                        autoFocus={isEditing ? true : false}
-
                     />
                     <TextField
                         className="general-info-labels"
                         label="Last Name"
                         name="lastName"
-                        defaultValue={user.lastName}
+                        defaultValue={lastName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
                 </div>
-                <div style={{marginTop: '1rem'}}>
-                <TextField
-                    className="general-info-labels"
-                    label="Email Address"
-                    name="email"
-                    defaultValue={user.email}
-                    variant={isEditing ? "outlined" : "standard"}
-                    InputProps={!isEditing ? { readOnly: true } : null}
-                />
+                <div style={{ marginTop: '1rem' }}>
+                    <TextField
+                        className="general-info-labels"
+                        label="Email Address"
+                        name="email"
+                        defaultValue={email}
+                        variant={isEditing ? "outlined" : "standard"}
+                        InputProps={!isEditing ? { readOnly: true } : null}
+                    />
                 </div>
-                { isEditing
+                {isEditing
                     ? <Button type="submit" variant="outlined" style={{ marginTop: '1rem' }}>Apply Changes</Button>
-                    : null }
+                    : null}
             </form>
         </Grid>
     );

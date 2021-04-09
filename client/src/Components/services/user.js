@@ -1,10 +1,12 @@
 import {sendRequest} from './server';
 const postRequest = ['POST', 'application/json'];
+
 function uploadEditedGeneralInfo(e, id) {
     const body = JSON.stringify({
         firstName: e.target.firstName.value,
         lastName: e.target.lastName.value,
-        email: e.target.email.value
+        email: e.target.email.value,
+        imageUrl: e.target.imageUrl.value   
     })
     return sendRequest(`/users/${id}/edit-profile`, body, postRequest)
     .catch(err => console.log(err));

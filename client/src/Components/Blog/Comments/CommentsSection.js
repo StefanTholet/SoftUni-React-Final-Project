@@ -1,59 +1,75 @@
 import { Grid } from "@material-ui/core";
-import Comment from './Comment';
+import OldComment from './OldComment';
+import NewComment from './NewComment'
 import Button from '@material-ui/core/Button';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updatePostWithComment } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core'
 
+const useStyles = makeStyles({
+  'comment-section-container': {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center'
+  },
+  'comment-toggle': {
+    marginBottom: '2.5rem',
+    padding: '10px 20px',
+    margin: '0 auto'
+  }
+})
 
+const CommentsSection = ({ post, avatar, match, user }) => {
 
-const CommentsSection = (props) => {
-  const currentLocation = window.location.origin;
   const [wantsToComment, setCommentDecision] = useState(false);
-  const comments = props.post.comments
+  const [comments, setComments] = useState(null);
+
+  useEffect(() => {
+    setComments(post.comments)  
+  })
+
+  console.log(post)
+
+  const classes = useStyles();
+
   const showCommentBox = () => {
     setCommentDecision(!wantsToComment);
   }
 
   const submitComment = (e) => {
     e.preventDefault();
-    const { postId } = props.match.params;
+    const { postId } = match.params;
     const content = e.target.comment.value;
     const comment = {
-      author: 'Stefan',
-      avatar: `${currentLocation}/profile.jpeg`,
+      author: `${user.firstName} ${user.lastName}`,
+      avatar: user.imageUrl,
       content,
       postedOnDate: today
     }
     updatePostWithComment(postId, comment)
       .then(res => {
+        setComments(currentComments => {
+          currentComments.push(comment);
+          return currentComments;
+        })
         setCommentDecision(!wantsToComment)
-        props.history.push(`/blog/read-more/${postId}`)
       })
       .catch(err => console.log(err))
   }
 
   return (
-    <Grid style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-        <h1>Comments</h1>
-        <Button style={{ marginBottom: '2.5rem' }}
-          variant="contained"
-          onClick={showCommentBox}
-        >
-          {comments ? 'Tell us what you think' : 'Be the first person to comment!'}</Button>
-        {wantsToComment ? <Comment bool={true} submitComment={submitComment} /> : null}
-        {comments ?
-          comments.map(x =>
-            <Comment
-              content={x.content}
-              author={x.author}
-              avatar={x.avatar}
-              postedOnDate={x.postedOnDate}
-              key={x._id}
-            />)
-          : null
-        }
+    <Grid className={classes['comment-section-container']} >
+      <h1>Comments</h1>
+      <Button className={classes['comment-toggle']}
+        variant="contained"
+        onClick={showCommentBox}
+      >
+        {comments ? 'Tell us what you think!' : 'Be the first person to comment!'}</Button>
+      {wantsToComment ? <NewComment submitComment={submitComment} avatar={avatar} /> : null}
+      {comments? comments.map(x => <OldComment comment={x} />) : null}
     </Grid>
   );
 }

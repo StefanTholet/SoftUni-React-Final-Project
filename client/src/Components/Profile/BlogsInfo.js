@@ -13,7 +13,7 @@ const BlogsInfo = (
     ownBlogDeleteHandler,
     deleteFavoriteHandler
   }) => {
-
+  console.log('refresh')
   const [favoriteBlogs, setFavoriteBlogs] = useState()
   const { blogPosts: ownBlogs, favoritePosts } = user;
 

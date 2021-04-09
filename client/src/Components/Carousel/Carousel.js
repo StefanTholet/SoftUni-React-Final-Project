@@ -29,13 +29,19 @@ const useStyles = makeStyles(() => ({
         height: '100%',
         margin: '0 auto',
         alignItems: 'center'
+    },
+    'room-counter': {
+        marginTop: '2rem',
+        border: '1px solid lightGrey',
+        padding: '2px 10px',
+        borderRadius: '5px'
     }
 }))
 
 const rooms = [
-    { 'Single Bedroom': 'https://cdn.pixabay.com/photo/2017/01/14/12/48/hotel-1979406_1280.jpg' },
-    { 'Double Bedroom': 'https://cdn.pixabay.com/photo/2020/02/05/15/09/room-4821441_1280.jpg' },
-    { 'Tiple Bedroom': 'https://cdn.pixabay.com/photo/2019/08/28/10/20/room-4436376_1280.jpg' }
+    { 'Single Bedroom': 'singleBedroom.jpg' },
+    { 'Double Bedroom': 'doubleBedroom.jpg' },
+    { 'Tiple Bedroom': 'tripleBedroom.jpg' }
 ]
 
 const Carousel = () => {
@@ -73,6 +79,11 @@ const Carousel = () => {
                 <IconButton onClick={onForwardArrowClickHandler}>
                     <ArrowForwardIosIcon fontSize="large" />
                 </IconButton>
+            </Grid>
+            <Grid className={classes['room-counter']}>
+                <span>{roomIndex + 1}</span>
+                <span>/</span>
+                <span>{rooms.length}</span>
             </Grid>
         </Grid>
     );

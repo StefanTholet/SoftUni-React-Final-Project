@@ -13,12 +13,13 @@ const useStyles = makeStyles(() => ({
     },
 }))
 
-const AuthorAvatar = ({ createdOn, author }) => {
+const AuthorAvatar = ({ createdOn, author, image }) => {
     const classes = useStyles();
+    
     return (
         <Grid container item className={classes['avatar-container']} xs={12} md={12} >
             <Grid className='avatar'>
-                <Avatar src={`${window.location.origin}/profile.jpeg`} />
+                <Avatar src={image} />
             </Grid>
             <Grid className='post-details'>
                 <Grid className='author-name' container direction="column" >
