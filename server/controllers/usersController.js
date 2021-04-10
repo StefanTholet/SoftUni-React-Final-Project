@@ -54,7 +54,7 @@ router.post('/:userId/delete-favorite-post', (req, res) => {
     const { blogId } = req.body;
     const { userId } = req.params;
     dbServices.removeFromDbArray(User, userId, 'favoritePosts', blogId)
-        .then(dbServices.getUpdatedUser(userId))
+        .then(data => dbServices.getUpdatedUser(userId))
         .then(updateduser => res.json(updateduser))
         .catch(err => console.log(err))
 })

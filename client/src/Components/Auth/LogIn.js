@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import useAlert from '../../hooks/useAlert';
+import hideAlertAndRedirect from '../services/all';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-
+import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -31,7 +32,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Logn = ({ onLoginSubmitForm }) => {
+const Logn = ({ onLoginSubmitForm, history, userId }) => {
+
+
+    const { showAlert, setShowAlert, alertMessage } = useAlert();
+
+    const onLoginSubmitFormWithAlert = (e) => {
+        onLoginSubmitForm(e)
+            .then(msg => {
+                if (msg) {
+                    setShowAlert('success', msg);
+                } else {
+                    setShowAlert('error', 'Incorrect username or password');
+                }
+            })
+    }
+
+    useEffect(() => {
+        if (showAlert === 'success') {
+            return hideAlertAndRedirect(setShowAlert, showAlert, history, `users/${userId}/profile`)
+        }
+        hideAlertAndRedirect(setShowAlert);
+    }, [showAlert])
+
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs">
@@ -43,7 +66,7 @@ const Logn = ({ onLoginSubmitForm }) => {
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
-                <form className={classes.form} noValidate onSubmit={(e) => onLoginSubmitForm(e)}>
+                <form className={classes.form} noValidate onSubmit={(e) => onLoginSubmitFormWithAlert(e)}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -85,8 +108,15 @@ const Logn = ({ onLoginSubmitForm }) => {
                     </Grid>
                 </form>
             </div>
+            { showAlert ?
+                <Alert variant="outlined" severity={showAlert}>
+                    {alertMessage}
+                </Alert>
+                :
+                null
+            }
         </Container>
     );
 }
 
-export default Logn;
+export default withRouter(Logn);

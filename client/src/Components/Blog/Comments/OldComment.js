@@ -6,7 +6,7 @@ const useStyles = makeStyles(() => ({
         color: 'black',
         width: '30%',
         minWidth: '28rem',
-        minHeight: '10rem',
+        minHeight: '5rem',
         margin: '0 auto',
         marginBottom: '3rem',
         display: 'flex',

@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const bookingSchema = new mongoose.Schema({
     'dates': {
         type: {
-            'check-in': {
+            'checkIn': {
                 type: String,
                 required: [true, 'Check-in date is required in order to make a reservation']
             },
-            'check-out': {
+            'checkOut': {
                 type: String,
                 required: [true, 'Check-out date is required in order to make a reservation']
             },

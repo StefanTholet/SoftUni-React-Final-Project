@@ -31,7 +31,10 @@ const Header = () => {
             }
         }
         return {
-            onLogOut: () => setUser(null),
+            onLogOut: () => {
+                setUser(null);
+                sessionStorage.clear();
+            },
             menuItems: ['Book Now|', 'Blog|', 'Add Blog Post|', 'Logout',],
             links: {
                 'Book Now|': '/book',

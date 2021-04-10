@@ -22,13 +22,12 @@ router.post('/register', async (req, res) => {
         res.json(error);
     }
     }
-    res.json({message: "All registration fields must be filled"})
 });
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        let verifiedUser = await authService.login({ email, password });
+        let verifiedUser = await authService.login( email, password );
         res.json(verifiedUser);
     } catch (error) {
         console.log(error);

@@ -5,7 +5,7 @@ const DatePickers = () => {
     return (
         <Grid item className="date-pickers">
             <TextField
-                id="check-in"
+                id="checkIn"
                 label="Check-in"
                 type="date"
                 defaultValue={today}
@@ -15,7 +15,7 @@ const DatePickers = () => {
                 style={{ marginRight: '2em' }}
             />
             <TextField
-                id="check-out"
+                id="checkOut"
                 label="Check-out"
                 type="date"
                 InputLabelProps={{

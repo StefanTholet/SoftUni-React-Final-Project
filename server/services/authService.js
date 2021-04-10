@@ -8,12 +8,11 @@ const register = async ({ firstName, lastName, email, password }) => {
     let hash = await bcrypt.hash(password, salt);
 
     const user = new User({ firstName, lastName, email, password: hash });
-    console.log(user)
     return await user.save();
 };
 
-const login = async ({ username, password }) => {
-    let user = await User.findOne({ username }).populate('bookings').populate('blogPosts');
+const login = async ( email, password ) => {
+    let user = await User.findOne({ email }).populate('bookings').populate('blogPosts');
     if (!user) throw { message: 'Username or password does not match' };
 
     let isMatch = await bcrypt.compare(password, user.password);

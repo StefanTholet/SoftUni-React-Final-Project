@@ -6,8 +6,8 @@ function getBookingData(event) {
     const formData = [...event.target].map(input => input.value)
     return JSON.stringify({
         dates: {
-            'check-in': formData[0],
-            'check-out': formData[1],
+            'checkIn': formData[0],
+            'checkOut': formData[1],
         },
         guests: {
             'adults': formData[2],

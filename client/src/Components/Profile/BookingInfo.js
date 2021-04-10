@@ -3,20 +3,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import { useState, useEffect } from 'react'
 const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
 
-    console.log(user)
-    const { bookings } = user ? user : '';
-    const bookingDetails = bookings ? bookings[0] : '';
+    const bookingDetails = user?.bookings?.[0];
+    const [dates, setDates] = useState(bookingDetails?.dates);
 
+    useEffect(() => {
+        setDates(bookingDetails?.dates);
+    }, [user])
+
+    const onDateChangeInput = (e) => {
+        const value = e.target.value;
+        setDates({ ...dates, [e.target.name]: value })
+    }
 
     const saveNewBookingDetails = (e) => {
         e.preventDefault();
         const newDetails = {
             dates: {
-                'check-in': e.target['check-in'].value,
-                'check-out': e.target['check-out'].value,
+                'checkIn': e.target.checkIn.value,
+                'checkOut': e.target.checkOut.value,
             },
             guests: {
                 adults: e.target.adults.value,
@@ -46,23 +53,24 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                 </div>
                 <div className="info-box-container">
                     <TextField
+                        onChange={onDateChangeInput}
                         className="general-info-labels"
                         label="Check-in"
-                        name="check-in"
-                        value={user ? user.bookings?.[0]?.dates['check-in'] : null}
+                        name="checkIn"
+                        value={dates?.checkIn}
                         type="date"
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        defaultValue={bookingDetails ? bookingDetails?.dates['check-in'] : null}
+
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
                     <TextField
+                        onChange={onDateChangeInput}
                         className="general-info-labels"
                         label="Check-out"
-                        name="check-out"
-                        defaultValue=""
-                        value={bookingDetails ? bookingDetails.dates?.['check-out'] : null}
+                        name="checkOut"
+                        value={dates?.checkOut}
                         type="date"
                         InputLabelProps={{
                             shrink: true,
@@ -77,8 +85,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Adults"
                         name="adults"
-                        defaultValue=' '
-                        value={bookingDetails ? bookingDetails?.guests.adults : null}
+                        defaultValue={bookingDetails?.guests.adults}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                         autoFocus={isEditing ? true : false}
@@ -87,8 +94,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Children"
                         name="children"
-                        defaultValue=' '
-                        value={bookingDetails ? bookingDetails?.guests.children : null}
+                        defaultValue={bookingDetails?.guests.children}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
@@ -101,8 +107,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Single"
                         name="single"
-                        defaultValue=' '
-                        value={bookingDetails ? bookingDetails?.rooms.single : null}
+                        defaultValue={bookingDetails?.rooms.single}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
@@ -110,8 +115,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Double"
                         name="double"
-                        defaultValue=' '
-                        value={bookingDetails ? bookingDetails?.rooms.double : null}
+                        defaultValue={bookingDetails?.rooms.double}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
@@ -119,8 +123,7 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Triple"
                         name="triple"
-                        defaultValue=' '
-                        value={bookingDetails ? bookingDetails?.rooms.triple : null}
+                        defaultValue={bookingDetails?.rooms.triple}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />

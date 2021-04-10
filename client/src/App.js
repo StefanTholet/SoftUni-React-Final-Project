@@ -1,6 +1,5 @@
 import style from './App.module.css';
 import { Route, Switch, withRouter } from 'react-router-dom';
-
 import Header from './Components/Header/Header';
 import Book from './Components/Book/Book';
 import BlogPostsPage from './Components/Blog/BlogPostsPage/BlogPostsPage';
@@ -17,7 +16,7 @@ import { signInUserAndGetUserData, registerUser } from './Components/services/us
 import { useState, useEffect } from 'react';
 import UserContext from './Components/Contexts/UserContext';
 import TokenContext from './Components/Contexts/TokenContext'
-import useToken from './useToken';
+import useToken from './hooks/useToken';
 
 function App(props) {
 
@@ -43,24 +42,28 @@ function App(props) {
 
   const onRegistrationSubmitHandler = (e) => {
     e.preventDefault();
-    registerUser(e)
+    return registerUser(e)
       .then(userData => {
         if (userData._id) {
           setUser(userData)
           setToken(userData._id)
         }
+        return userData;
       })
+      .catch(err => err)
   }
-
   const onLoginSubmitForm = (e) => {
     e.preventDefault();
-    signInUserAndGetUserData(e)
+    return signInUserAndGetUserData(e)
       .then(userData => {
         if (userData._id) {
           setUser(userData)
           setToken(userData._id)
+          return ['success', `Welcome back, ${userData.firstName}`]
         }
+       
       })
+      .catch(err => ['error', 'Incorrect username or password'])
   }
 
   return (
@@ -76,7 +79,7 @@ function App(props) {
               <Route path="/create-blog" component={CreateBlog} exact />
               <Route path="/users/:userId/profile" component={Profile} exact></Route>
               <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} />} exact></Route>
-              <Route path="/login" component={() => <Login onLoginSubmitForm={onLoginSubmitForm} />} exact></Route>
+              <Route path="/login" render={() => <Login onLoginSubmitForm={onLoginSubmitForm} userId={user?._id} />} exact></Route>
             </Switch>
           </Grid>
         </Grid>

@@ -4,24 +4,28 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { useEffect } from 'react';
+import  useControlledForm  from '../../hooks/useControlledForm';
 
 const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
-    useEffect(() => {
-    }, [user])
-    const { imageUrl, firstName, lastName, email } = user;
 
+    const {data, setData} = useControlledForm(user)
+    const onFormChangeHandler = (e) => {
+        setData(e)
+    }
+    const { imageUrl, firstName, lastName, email } = data;
+    
     return (
         <Grid className="general-info">
-            <form onSubmit={submitClickHandler}>
+            <form onSubmit={submitClickHandler} >
                 <div className="flex-container">
                     <h2>General Information</h2>
                     <IconButton className="icon-button">
                         <EditIcon onClick={editClickHandler} />
                     </IconButton>
                 </div>
-                { isEditing ? 
+                {isEditing ?
                     <TextField
+                        onChange={onFormChangeHandler}
                         className="general-info-labels"
                         label="Avatar Image URL"
                         name="imageUrl"
@@ -29,12 +33,13 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         defaultValue=' '
                         variant="outlined"
                         autoFocus
-                        style={{marginBottom: '1rem'}}
+                        style={{ marginBottom: '1rem' }}
                     />
-                : <Avatar style={{ marginBottom: '1rem' }} src={imageUrl} />
+                    : <Avatar style={{ marginBottom: '1rem' }} src={imageUrl} />
                 }
                 <div className="info-box-container">
                     <TextField
+                        onChange={onFormChangeHandler}
                         className="general-info-labels"
                         label="First Name"
                         name="firstName"
@@ -44,6 +49,7 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         InputProps={!isEditing ? { readOnly: true } : null}
                     />
                     <TextField
+                        onChange={onFormChangeHandler}
                         className="general-info-labels"
                         label="Last Name"
                         name="lastName"
@@ -55,6 +61,7 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                 </div>
                 <div style={{ marginTop: '1rem' }}>
                     <TextField
+                        onChange={onFormChangeHandler}
                         className="general-info-labels"
                         label="Email Address"
                         name="email"

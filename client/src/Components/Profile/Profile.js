@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { useState, useContext, useEffect} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from '../Contexts/UserContext';
 import TokenContext from '../Contexts/TokenContext'
 import GeneralInfo from './GeneralInfo';
@@ -11,12 +11,23 @@ import { uploadEditedBooking } from '../services/bookService';
 import { deleteBlogPost, deleteFavoritePost } from '../services/blogService';
 import { withRouter } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
-
-
+import useAlert from '../../hooks/useAlert';
+import hideAlertAndRedirect from '../services/all'
+import Alert from '@material-ui/lab/Alert';
 const Profile = ({ history }) => {
+
     const [user, setUser] = useContext(UserContext)
-   
-    const [ token ] = useContext(TokenContext)
+    console.log(user)
+    const [token] = useContext(TokenContext)
+
+    const { showAlert, setShowAlert, alertMessage } = useAlert();
+
+    useEffect(() => {
+        if (showAlert === 'success') {
+            return hideAlertAndRedirect(setShowAlert, showAlert,)
+        }
+        hideAlertAndRedirect(setShowAlert);
+    }, [showAlert])
 
     useEffect(() => {
         if (!user && !token) {
@@ -37,6 +48,7 @@ const Profile = ({ history }) => {
             .then(updatedUser => {
                 setUser(updatedUser)
                 setisEditingGeneralInfo(false)
+                setShowAlert('success', 'General information edited!')
             })
             .catch(err => console.log(err))
     }
@@ -47,11 +59,12 @@ const Profile = ({ history }) => {
 
     const onBookingInfoFormSubmitHandler = (newBookingDetails) => {
         uploadEditedBooking(newBookingDetails, user._id, user.bookings[0]._id)
-        .then(updatedUser => {
-            setUser(updatedUser)
-            setisEditingBookingInfo(false)
-        })
-        .catch(err => console.log(err))
+            .then(updatedUser => {
+                setUser(updatedUser)
+                setisEditingBookingInfo(false)
+                setShowAlert('success', 'Your booking has been edited!')
+            })
+            .catch(err => console.log(err))
     }
 
     const blogBoxClickHandler = (id) => {
@@ -60,17 +73,30 @@ const Profile = ({ history }) => {
 
     const ownBlogDeleteHandler = (blogId) => {
         deleteBlogPost(blogId, user._id)
-            .then(updatedUser => setUser(updatedUser))
+            .then(updatedUser => {
+                setUser(updatedUser)
+                setShowAlert('success', 'You have deleted your post!')
+            })
     }
 
     const deleteFavoriteHandler = (blogId) => {
         deleteFavoritePost(blogId, user._id)
-            .then(updatedUser => setUser(updatedUser))
+            .then(updatedUser => {
+                setUser(updatedUser)
+                setShowAlert('success', 'Favorite post removed!')
+            })
             .catch(err => console.log(err))
     }
 
     return (
         <Grid container className="profile-container" style={{}}>
+            { showAlert ?
+                <Alert variant="outlined" severity={showAlert}>
+                    {alertMessage}
+                </Alert>
+                :
+                null
+            }
             <GeneralInfo
                 user={{ ...user }}
                 isEditing={isEditingGeneralInfo}
@@ -78,8 +104,8 @@ const Profile = ({ history }) => {
                 submitClickHandler={onGeneralInfoFormSubmitHandler}
             />
             <Divider />
-            <BookingInfo 
-                user={{...user}}
+            <BookingInfo
+                user={{ ...user }}
                 isEditing={isEditingBookingInfo}
                 editClickHandler={isEditingBookingInfoHandler}
                 submitClickHandler={onBookingInfoFormSubmitHandler}

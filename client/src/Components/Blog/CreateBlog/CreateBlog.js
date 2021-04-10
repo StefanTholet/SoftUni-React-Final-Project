@@ -9,12 +9,21 @@ import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
 import BlogPost from '../ReadBlogPost/BlogPost';
 import Grid from '@material-ui/core/Grid';
-
-
+import Alert from '@material-ui/lab/Alert';
+import useAlert from '../../../hooks/useAlert';
+import hideAlertAndRedirect from '../../services/all'
 const CreateBlog = ({ history }) => {
     const [user, setUser] = useContext(UserContext);
-    const  author  = `${user?.firstName} ${user?.lastName}`;
-    const [ token ] = useContext(TokenContext)
+    const author = `${user?.firstName} ${user?.lastName}`;
+    const [token] = useContext(TokenContext)
+    const { showAlert, setShowAlert, alertMessage } = useAlert();
+
+    useEffect(() => {
+        if (showAlert === 'success') {
+            return hideAlertAndRedirect(setShowAlert, showAlert, history, '/blog')
+        }
+        hideAlertAndRedirect(setShowAlert);
+    }, [showAlert])
 
     useEffect(() => {
         if (!user && !token) {
@@ -54,8 +63,10 @@ const CreateBlog = ({ history }) => {
         e.preventDefault();
         const body = compileBlogPost();
         addBlogPost(body)
-            .then(updatedUser =>{   
-                setUser(updatedUser)})
+            .then(updatedUser => {
+                setUser(updatedUser)
+                setShowAlert('success', 'Blog post created!')
+            })
     }
     const onTextEditorChangeHandler = (e, editor) => {
         const data = editor.getData();
@@ -69,6 +80,13 @@ const CreateBlog = ({ history }) => {
     return (
         <Grid>
             <HeroImage image={'createBlog.jpg'} />
+            { showAlert ?
+                <Alert variant="outlined" severity={showAlert} style={{width: '20%', margin: '0 auto', marginTop: '2rem'}}>
+                    {alertMessage}
+                </Alert>
+                :
+                null
+            }
             <TextEditor onTextEditorChange={onTextEditorChangeHandler}
                 onSubmit={submitPost} onPreview={onPreviewPostBtnClick}
                 onImageUrlInputChangeHandler={onImageUrlInputChangeHandler}

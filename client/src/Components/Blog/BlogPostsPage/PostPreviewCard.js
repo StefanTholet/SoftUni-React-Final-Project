@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        width: '60rem',
         minWidth: '40rem',
     },
     media: {
@@ -58,7 +59,7 @@ const PostPreviewCard = ({ blogData, user, setUser }) => {
     const { title, createdOnDate, imageUrl, altImage, content, _id } = blogData;
 
     useEffect(() => {
-        if (user) {
+        if (user && user.favoritePosts) {
         setFavorite(user.favoritePosts.includes(_id))
     }
     }, [user])

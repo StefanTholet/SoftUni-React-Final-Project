@@ -6,6 +6,7 @@ import { decodeBlogPost } from '../services/blogService'
 import ReactHtmlParser from 'react-html-parser';
 import { useEffect, useState } from 'react';
 import { getFavouritePosts } from '../services/blogService';
+
 const BlogsInfo = (
   {
     user,
@@ -14,14 +15,14 @@ const BlogsInfo = (
     deleteFavoriteHandler
   }) => {
     
-    // console.log(user)
-
   const [favoriteBlogs, setFavoriteBlogs] = useState()
   const { blogPosts: ownBlogs, favoritePosts } = user;
 
   useEffect(() => {
+    if (favoritePosts) {
     getFavouritePosts({ posts: favoritePosts })
       .then(listOfFavorites => setFavoriteBlogs(listOfFavorites))
+    }
   }, [user])
   
   return (
