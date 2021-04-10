@@ -7,21 +7,6 @@ This project is a website for a hotel where authenticated users can
 4. Comment section is also available for every blog post.
 5. User profile page where information is provided about the user's booked holiday, own blog posts, favorite posts and general information (names, email etc). The user can edit their general profile (names, email, etc) and booking information, as well as remove posts from their favorites list and delete their blog posts.
 
-
-TO DO: 
-User profile page where they can see:
-1. Information about their booked holiday;
-2. List of their own and favorite posts;
-3. Number of likes from their posts;
-4. Functionalities to:
-a). Add profile picture;
-b). Access blog pages of their own and favorite blog posts;
-c). Edit information.  
-
-Add preview opion of the created post;
-Add like option to blog post pages;
-Add carousel gallery slideshow to the booking section
-
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 The front-end of this project was bootstrapped with Create React App, Material-UI and CkEditor.
 For the back-end I used Node with Express and MongoDB as a database. 
