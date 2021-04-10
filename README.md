@@ -1,7 +1,12 @@
 # SoftUni-React-Final-Project
 
-This project is a website for a hotel where authenticated users can book a holiday and read or write their own blog about their holiday. Furthermore, the users can like 
-blogs that are not their own and add them to a list of favorite blogs. Comment section is also available for every particular blog post.
+This project is a website for a hotel where authenticated users can 
+1. Book a holiday;
+2. Read and write blog posts - preview of what the blog would look like is also available in the create-blog section; 
+3. Add blog to a list of favorite blogs. 
+4. Comment section is also available for every blog post.
+5. User profile page where information is provided about the user's booked holiday, own blog posts, favorite posts and general information (names, email etc). The user can edit their general profile (names, email, etc) and booking information, as well as remove posts from their favorites list and delete their blog posts.
+
 
 TO DO: 
 User profile page where they can see:
