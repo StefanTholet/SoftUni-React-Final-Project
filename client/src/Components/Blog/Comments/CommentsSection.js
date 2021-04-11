@@ -28,7 +28,7 @@ const CommentsSection = ({ post, match, user }) => {
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
-    setComments(post.comments)  
+    setComments(post.comments)
   })
 
   const classes = useStyles();
@@ -67,7 +67,7 @@ const CommentsSection = ({ post, match, user }) => {
       >
         {comments ? 'Tell us what you think!' : 'Be the first person to comment!'}</Button>
       {wantsToComment ? <NewComment submitComment={submitComment} avatar={avatar} /> : null}
-      {comments? comments.map(x => <OldComment comment={x} />) : null}
+      {comments ? comments.map(x => <OldComment key={post._id + x.author} comment={x} />) : null}
     </Grid>
   );
 }

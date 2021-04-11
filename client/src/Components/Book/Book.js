@@ -13,7 +13,6 @@ const Book = (
     { history }
 ) => {
     const [user, setUser] = useContext(UserContext)
-    const [ token ] = useContext(TokenContext)
     const { showAlert, setShowAlert, alertMessage } = useAlert();
 
     useEffect(() => {
@@ -24,13 +23,18 @@ const Book = (
     }, [showAlert])
 
     useEffect(() => {
-        if (!user && !token) {
+        if (!user) {
             history.push('/login')
         }
     })
 
     const onFormBookingSubmit = (e) => {
         e.preventDefault();
+        const formData = [...e.target].map(input => input.value)
+        if (!formData[0] || !formData[1]) {
+            setShowAlert('error', 'Please select check-in and check-out dates!');
+            return; 
+        }
         reservation(e, user._id)
             .then(updatedUser => {
                  setUser(updatedUser)

@@ -48,12 +48,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 const PostPreviewCard = ({ blogData, user, setUser }) => {
-    //TODO
-    // set useEffect to check if blogId can be found inside user.favoritePosts and set favorite to true if so
-    // add check to click handler to see if favorite is true and return if so
-
+ 
     const [isFavorite, setFavorite] = useState(null)
 
     const { title, createdOnDate, imageUrl, altImage, content, _id } = blogData;

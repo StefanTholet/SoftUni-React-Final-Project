@@ -21,6 +21,8 @@ router.post('/register', async (req, res) => {
         console.log(error);
         res.json(error);
     }
+    } else {
+        res.json({msg: 'Please fill all of the registration fields'})
     }
 });
 

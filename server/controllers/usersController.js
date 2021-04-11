@@ -33,6 +33,7 @@ router.post('/:userId/bookings/:bookingId/edit', (req, res) => {
 router.post('/:userId/bookings/add', (req, res) => {
     const { userId } = req.params;
     const bookingData = req.body;
+    
     if (bookingData.children === 'No children') bookingData.children = 0;
     dbServices.create(Booking, bookingData)
         .then(response => {

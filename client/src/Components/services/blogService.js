@@ -1,7 +1,8 @@
 // import { today } from './bookService';
 import { sendRequest } from './server'
 const postRequest = ['POST', 'application/json'];
-function decodeBlogPost(postData) {
+
+function decodeBlogPost(postData) { 
     const regextPatterns = {
         heading: /<h[0-6]>.+<\/h[0-6]>/gm,
         content: /<p>.+<\/p>/gm

@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
         borderRadius: '5px'
     },
     'blog-content': {
-        // maxWidth: '40%',
         marginTop: '1rem',
         color: 'black'
     },

@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useState, useEffect } from 'react'
+
 const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) => {
 
     const bookingDetails = user?.bookings?.[0];

@@ -17,7 +17,13 @@ import Alert from '@material-ui/lab/Alert';
 const Profile = ({ history }) => {
 
     const [user, setUser] = useContext(UserContext)
-    console.log(user)
+    
+    useEffect(() => {
+        if (!user) {
+            history.push('/login')
+        }
+    })
+    
     const [token] = useContext(TokenContext)
 
     const { showAlert, setShowAlert, alertMessage } = useAlert();

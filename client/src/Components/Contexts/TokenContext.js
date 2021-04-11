@@ -1,5 +1,5 @@
 import React from 'react';
 
-const TokenContext = React.createContext(null);
+const TokenContext = React.createContext();
 
 export default TokenContext;

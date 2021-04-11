@@ -6,6 +6,7 @@ export default  function hideAlertAndRedirect(setShowAlert, showAlert, history ,
         }, 2000)
     })
         .then(res => {
+            console.log('test')
             if (redirectLink) {
                 if (showAlert === 'success') history.push(redirectLink)
             }

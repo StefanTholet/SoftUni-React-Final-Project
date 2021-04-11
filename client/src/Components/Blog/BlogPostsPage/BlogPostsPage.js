@@ -18,12 +18,11 @@ const BlogPostsPage = ({ history }) => {
 
     const [user, setUser] = useContext(UserContext)
     const [blogPosts, setPosts] = useState([]);
-    const [token] = useContext(TokenContext)
 
     useEffect(() => {
-        if (!user && !token) {
+        if (!user) {
             history.push('/login')
-        }
+        } else {
         getPosts()
             .then(result => result.json())
             .then(allPosts => {
@@ -33,14 +32,14 @@ const BlogPostsPage = ({ history }) => {
                 setPosts(decodedPosts)
             })
             .catch(err => console.log(err))
+        }
     }, []);
     const classes = useStyles();
     return (
         <>
             <HeroImage image={'blog.jpg'} />
             <Grid container direction="column" alignItems="center" className={classes['blog-posts-container']}>
-                {blogPosts.map(post => <PostPreviewCard blogData={post} user={user} setUser={setUser} />
-
+                {blogPosts.map(post => <PostPreviewCard blogData={post} key={post.title + post._id} user={user} setUser={setUser} />
                 )}
             </Grid>
         </>

@@ -63,14 +63,14 @@ const Header = () => {
                             ? <Grid item>
                                 <Button component={NavLink} to={`/users/${user._id}/profile`} >
                                     <Typography className={classes['nav-links']} variant="h5">
-                                        Welcome back, {user.firstName}!
+                                        Greetings, {user.firstName}!
                                     </Typography>
                                 </Button>
                             </Grid>
                             : null
                         }
                         <Grid item>
-                            {menuItems.menuItems.map(x => <Button component={NavLink} to={menuItems.links[x]} >
+                            {menuItems.menuItems.map(x => <Button component={NavLink} key={menuItems.links[x]} to={menuItems.links[x]} >
                                 <Typography className={classes['nav-links']} variant="h6" onClick={x === 'Logout' ? menuItems.onLogOut : null}>
                                     {x}
                                 </Typography>

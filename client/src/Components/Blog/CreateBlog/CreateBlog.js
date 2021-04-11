@@ -12,10 +12,19 @@ import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
 import useAlert from '../../../hooks/useAlert';
 import hideAlertAndRedirect from '../../services/all'
+
 const CreateBlog = ({ history }) => {
+
     const [user, setUser] = useContext(UserContext);
+    
+    useEffect(() => {
+        if (!user) {
+            history.push('/login')
+            return;
+        }
+    });
+
     const author = `${user?.firstName} ${user?.lastName}`;
-    const [token] = useContext(TokenContext)
     const { showAlert, setShowAlert, alertMessage } = useAlert();
 
     useEffect(() => {
@@ -25,16 +34,13 @@ const CreateBlog = ({ history }) => {
         hideAlertAndRedirect(setShowAlert);
     }, [showAlert])
 
-    useEffect(() => {
-        if (!user && !token) {
-            history.push('/login')
-        }
-    })
+
     const [body, setBody] = useState('')
     const [preview, setPreview] = useState(false);
     const [post, setPost] = useState({})
 
     const [imageUrl, setImageUrl] = useState('');
+    
     const onImageUrlInputChangeHandler = (e) => {
         setImageUrl(e.target.value)
     }
@@ -81,7 +87,7 @@ const CreateBlog = ({ history }) => {
         <Grid>
             <HeroImage image={'createBlog.jpg'} />
             { showAlert ?
-                <Alert variant="outlined" severity={showAlert} style={{width: '20%', margin: '0 auto', marginTop: '2rem'}}>
+                <Alert variant="outlined" severity={showAlert} style={{ width: '20%', margin: '0 auto', marginTop: '2rem' }}>
                     {alertMessage}
                 </Alert>
                 :

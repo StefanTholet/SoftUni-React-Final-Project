@@ -24,14 +24,13 @@ function App(props) {
   const { token, setToken } = useToken();
 
   useEffect(() => {
-
     if (token) {
       sendRequest(`/auth/user/${token}`)
         .then(res => res.json())
         .then(user => setUser(user))
         .catch(err => console.log(err));
     }
-  }, [])
+  }, [token])
 
   const location = props.history.location.pathname;
   const setStyles = makeStyles({
@@ -47,8 +46,8 @@ function App(props) {
         if (userData._id) {
           setUser(userData)
           setToken(userData._id)
+          props.history.push(`users/${userData._id}/profile`)
         }
-        return userData;
       })
       .catch(err => err)
   }
@@ -59,11 +58,11 @@ function App(props) {
         if (userData._id) {
           setUser(userData)
           setToken(userData._id)
-          return ['success', `Welcome back, ${userData.firstName}`]
+          return `Welcome back, ${userData.firstName}`
         }
        
       })
-      .catch(err => ['error', 'Incorrect username or password'])
+      .catch(err => 'Incorrect username or password')
   }
 
   return (
@@ -78,7 +77,7 @@ function App(props) {
               <Route path="/blog/read-more/:postId" component={ReadBlogPost} />
               <Route path="/create-blog" component={CreateBlog} exact />
               <Route path="/users/:userId/profile" component={Profile} exact></Route>
-              <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} />} exact></Route>
+              <Route path="/register" component={() => <Register onRegistrationSubmitHandler={onRegistrationSubmitHandler} userId={user?._id}/>} exact></Route>
               <Route path="/login" render={() => <Login onLoginSubmitForm={onLoginSubmitForm} userId={user?._id} />} exact></Route>
             </Switch>
           </Grid>

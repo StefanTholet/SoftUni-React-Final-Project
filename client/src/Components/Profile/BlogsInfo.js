@@ -38,7 +38,8 @@ const BlogsInfo = (
           {ownBlogs ?
             ownBlogs.map(x => {
               x = decodeBlogPost(x)
-              return <Chip icon={<MenuBookRoundedIcon />}
+              return <Chip key={x._id + x.title}
+                icon={<MenuBookRoundedIcon />}
                 label={ReactHtmlParser(x.title)} color="primary"
                 variant="outlined"
                 onClick={() => blogBoxClickHandler(x._id)}

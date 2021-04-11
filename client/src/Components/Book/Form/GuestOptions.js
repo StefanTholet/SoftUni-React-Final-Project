@@ -17,7 +17,7 @@ const GuestOptions = () => {
                         name: 'adults',
                         id: 'adults',
                     }}>
-                    {adultsOptions.map(x => <option defaultValue={x}>{x}</option>)}
+                    {adultsOptions.map((x, index) => <option key={index} defaultValue={x}>{x}</option>)}
                 </Select>
             </Grid>
             <Grid item>
@@ -29,7 +29,7 @@ const GuestOptions = () => {
                         id: 'children',
                     }}>
                     <option defaultValue="none" defaultChecked="true">None</option>
-                    {childrenOptions.map(x => <option defaultValue={x}>{x}</option>)}
+                    {childrenOptions.map((x, index) => <option key={index} defaultValue={x}>{x}</option>)}
                 </Select>
             </Grid>
         </Grid>

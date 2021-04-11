@@ -50,6 +50,7 @@ const Logn = ({ onLoginSubmitForm, history, userId }) => {
 
     useEffect(() => {
         if (showAlert === 'success') {
+            console.log('login useffect')
             return hideAlertAndRedirect(setShowAlert, showAlert, history, `users/${userId}/profile`)
         }
         hideAlertAndRedirect(setShowAlert);
