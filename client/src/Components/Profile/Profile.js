@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import { useState, useContext, useEffect } from 'react';
 import UserContext from '../Contexts/UserContext';
-import TokenContext from '../Contexts/TokenContext'
+import TokenContext from '../Contexts/TokenContext';
 import GeneralInfo from './GeneralInfo';
 import BookingInfo from './BookingInfo';
 import BlogsInfo from './BlogsInfo';
@@ -17,30 +17,14 @@ import Alert from '@material-ui/lab/Alert';
 const Profile = ({ history }) => {
 
     const [user, setUser] = useContext(UserContext)
-    
-    useEffect(() => {
-        if (!user) {
-            history.push('/login')
-        }
-    })
-    
-    const [token] = useContext(TokenContext)
-
-    const { showAlert, setShowAlert, alertMessage } = useAlert();
-
-    useEffect(() => {
-        if (showAlert === 'success') {
-            return hideAlertAndRedirect(setShowAlert, showAlert,)
-        }
-        hideAlertAndRedirect(setShowAlert);
-    }, [showAlert])
-
+    const [token] = useContext(TokenContext);
     useEffect(() => {
         if (!user && !token) {
             history.push('/login')
         }
     })
 
+    const { showAlert, setShowAlert, alertMessage } = useAlert();
     const [isEditingGeneralInfo, setisEditingGeneralInfo] = useState(false);
     const [isEditingBookingInfo, setisEditingBookingInfo] = useState(false);
 
@@ -52,9 +36,10 @@ const Profile = ({ history }) => {
         e.preventDefault();
         uploadEditedGeneralInfo(e, user._id)
             .then(updatedUser => {
-                setUser(updatedUser)
-                setisEditingGeneralInfo(false)
-                setShowAlert('success', 'General information edited!')
+                setUser(updatedUser);
+                setisEditingGeneralInfo(false);
+                setShowAlert('success', 'General information edited!');
+                return (hideAlertAndRedirect(setShowAlert, showAlert))     
             })
             .catch(err => console.log(err))
     }
@@ -66,9 +51,10 @@ const Profile = ({ history }) => {
     const onBookingInfoFormSubmitHandler = (newBookingDetails) => {
         uploadEditedBooking(newBookingDetails, user._id, user.bookings[0]._id)
             .then(updatedUser => {
-                setUser(updatedUser)
-                setisEditingBookingInfo(false)
-                setShowAlert('success', 'Your booking has been edited!')
+                setUser(updatedUser);
+                setisEditingBookingInfo(false);
+                setShowAlert('success', 'Your booking has been edited!');
+                return (hideAlertAndRedirect(setShowAlert, showAlert));
             })
             .catch(err => console.log(err))
     }
@@ -81,7 +67,8 @@ const Profile = ({ history }) => {
         deleteBlogPost(blogId, user._id)
             .then(updatedUser => {
                 setUser(updatedUser)
-                setShowAlert('success', 'You have deleted your post!')
+                setShowAlert('success', 'You have deleted your post!');
+                return (hideAlertAndRedirect(setShowAlert, showAlert));
             })
     }
 
@@ -89,7 +76,8 @@ const Profile = ({ history }) => {
         deleteFavoritePost(blogId, user._id)
             .then(updatedUser => {
                 setUser(updatedUser)
-                setShowAlert('success', 'Favorite post removed!')
+                setShowAlert('success', 'Favorite post removed!');
+                return (hideAlertAndRedirect(setShowAlert, showAlert));
             })
             .catch(err => console.log(err))
     }
@@ -97,7 +85,7 @@ const Profile = ({ history }) => {
     return (
         <Grid container className="profile-container" style={{}}>
             { showAlert ?
-                <Alert variant="outlined" severity={showAlert}>
+                <Alert variant="outlined" severity={showAlert} style={{justifyContent: "center" }}>
                     {alertMessage}
                 </Alert>
                 :

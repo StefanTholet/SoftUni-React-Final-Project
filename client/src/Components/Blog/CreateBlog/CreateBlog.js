@@ -3,7 +3,7 @@ import TextEditor from './TextEditor/TextEditor';
 
 import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../../Contexts/UserContext';
-import TokenContext from '../../Contexts/TokenContext'
+import TokenContext from '../../Contexts/TokenContext';
 import { addBlogPost, decodeBlogPost } from '../../services/blogService';
 import { today } from '../../services/bookService';
 import { withRouter } from 'react-router-dom';
@@ -16,9 +16,9 @@ import hideAlertAndRedirect from '../../services/all'
 const CreateBlog = ({ history }) => {
 
     const [user, setUser] = useContext(UserContext);
-    
+    const [token] = useContext(TokenContext);
     useEffect(() => {
-        if (!user) {
+        if (!user && !token) {
             history.push('/login')
             return;
         }
@@ -26,15 +26,6 @@ const CreateBlog = ({ history }) => {
 
     const author = `${user?.firstName} ${user?.lastName}`;
     const { showAlert, setShowAlert, alertMessage } = useAlert();
-
-    useEffect(() => {
-        if (showAlert === 'success') {
-            return hideAlertAndRedirect(setShowAlert, showAlert, history, '/blog')
-        }
-        hideAlertAndRedirect(setShowAlert);
-    }, [showAlert])
-
-
     const [body, setBody] = useState('')
     const [preview, setPreview] = useState(false);
     const [post, setPost] = useState({})
@@ -71,7 +62,9 @@ const CreateBlog = ({ history }) => {
         addBlogPost(body)
             .then(updatedUser => {
                 setUser(updatedUser)
-                setShowAlert('success', 'Blog post created!')
+                setShowAlert('success', 'Blog post created!');
+                (hideAlertAndRedirect(setShowAlert, '/blog', history));
+                    return;
             })
     }
     const onTextEditorChangeHandler = (e, editor) => {
@@ -87,7 +80,7 @@ const CreateBlog = ({ history }) => {
         <Grid>
             <HeroImage image={'createBlog.jpg'} />
             { showAlert ?
-                <Alert variant="outlined" severity={showAlert} style={{ width: '20%', margin: '0 auto', marginTop: '2rem' }}>
+                <Alert variant="outlined" severity={showAlert} style={{ width: '20%', margin: '0 auto', marginTop: '2rem', justifyContent: 'center' }}>
                     {alertMessage}
                 </Alert>
                 :

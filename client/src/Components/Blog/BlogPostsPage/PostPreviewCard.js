@@ -18,8 +18,8 @@ import { useState, useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '60rem',
-        minWidth: '40rem',
+        minWidth: '20rem',
+        maxWidth: '50rem'
     },
     media: {
         height: 0,
@@ -64,7 +64,6 @@ const PostPreviewCard = ({ blogData, user, setUser }) => {
     const addPostToFavorites = (e, _id) => {
         e.preventDefault()
         if (isFavorite) {
-            console.log('already in favorites')
             sendRequest(`/blog/${_id}/remove-post-from-favorites`,
                 JSON.stringify({ userId: user._id }),
                 ['POST', 'application/json'])
@@ -86,7 +85,7 @@ const PostPreviewCard = ({ blogData, user, setUser }) => {
     }
 
     return (
-        <Grid item className={classes['card-container']} xs={6}>
+        <Grid item className={classes['card-container']}>
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
@@ -104,7 +103,7 @@ const PostPreviewCard = ({ blogData, user, setUser }) => {
                     width={400}
                 />
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="div">
                         {ReactHtmlParser(content)}
                     </Typography>
                 </CardContent>

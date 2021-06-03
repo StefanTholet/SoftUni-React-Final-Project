@@ -48,8 +48,8 @@ const Carousel = () => {
     const classes = useStyles()
     const [roomIndex, setRoomIndex] = useState(0);
 
-    const currentBedroomType = Object.keys(rooms[roomIndex])
-    const currentPicture = Object.values(rooms[roomIndex])
+    const currentBedroomType = Object.keys(rooms[roomIndex])[0];
+    const currentPicture = Object.values(rooms[roomIndex])[0];
 
     const onForwardArrowClickHandler = () => {
         if (roomIndex + 1 === rooms.length) {

@@ -6,9 +6,15 @@ const useAlert = () => {
     const [alertMessage, setAlertMessage] = useState('');
 
     const setAlertType = (type, message) => {
+        // console.log('args..')
+        // console.log(type)
+        // console.log(message)
+        
         setShowAlert(type);
+        // console.log('after set')
+        // console.log(showAlert)
         setAlertMessage(message);
-        console.log(showAlert, message);
+        // console.log(alertMessage)
     }
        
     return {

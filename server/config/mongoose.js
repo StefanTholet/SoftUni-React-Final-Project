@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongooseEndPoint = 'mongodb+srv://chefyata:pomber145@cluster0.wo3t9.mongodb.net/react';
+const mongooseEndPoint = 'mongodb+srv://chefyata:pomber145@cluster0.wo3t9.mongodb.net/react-final-project';
 
 let connection = mongoose.connect(mongooseEndPoint, { useNewUrlParser: true, useUnifiedTopology: true });
 module.exports = connection;

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import useAlert from '../../hooks/useAlert';
 import hideAlertAndRedirect from '../services/all';
 import Avatar from '@material-ui/core/Avatar';
@@ -32,29 +31,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Logn = ({ onLoginSubmitForm, history, userId }) => {
-
+const Login = ({ onLoginSubmitForm, history }) => {
 
     const { showAlert, setShowAlert, alertMessage } = useAlert();
-
     const onLoginSubmitFormWithAlert = (e) => {
         onLoginSubmitForm(e)
-            .then(msg => {
+            .then(({ msg, userId }) => {
                 if (msg) {
                     setShowAlert('success', msg);
+                    (hideAlertAndRedirect(setShowAlert, `/users/${userId}/profile`, history))
+                    return;
                 } else {
                     setShowAlert('error', 'Incorrect username or password');
+                    return (hideAlertAndRedirect(setShowAlert, showAlert));
                 }
-            })
+            });
     }
-
-    useEffect(() => {
-        if (showAlert === 'success') {
-            console.log('login useffect')
-            return hideAlertAndRedirect(setShowAlert, showAlert, history, `users/${userId}/profile`)
-        }
-        hideAlertAndRedirect(setShowAlert);
-    }, [showAlert])
 
     const classes = useStyles();
     return (
@@ -110,7 +102,7 @@ const Logn = ({ onLoginSubmitForm, history, userId }) => {
                 </form>
             </div>
             { showAlert ?
-                <Alert variant="outlined" severity={showAlert}>
+                <Alert variant="outlined" severity={showAlert} style={{ justifyContent: "center" }}>
                     {alertMessage}
                 </Alert>
                 :
@@ -120,4 +112,4 @@ const Logn = ({ onLoginSubmitForm, history, userId }) => {
     );
 }
 
-export default withRouter(Logn);
+export default withRouter(Login);

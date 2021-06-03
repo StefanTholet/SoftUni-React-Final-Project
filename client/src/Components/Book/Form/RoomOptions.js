@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 const RoomOptions = () => {
     return (
         <Grid item container className="MuiGrid-spacing-xs-4" justify="center" alignItems="center">
-        <InputLabel item>Room Types:</InputLabel>
+        <InputLabel>Room Types:</InputLabel>
         <Grid item>
             <InputLabel htmlFor="singleRooms">Single</InputLabel>
             <Select

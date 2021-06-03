@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const BlogPost = ({ post, imageUrl }) => {
+const BlogPost = ({ post, user }) => {
     const classes = useStyles();
     return (
         <>
@@ -47,7 +47,7 @@ const BlogPost = ({ post, imageUrl }) => {
                 <Typography variant='h3' className={classes['post-title']}>
                     {ReactHtmlParser(post.title)}
                 </Typography>
-                <AuthorAvatar image={imageUrl} author={post.author} createdOn={post.createdOn} />
+                <AuthorAvatar image={user?.imageUrl} author={post.author} createdOn={post.createdOn} />
                 <CardMedia
                     className={classes.media}
                     image={post.imageUrl}

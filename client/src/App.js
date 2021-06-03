@@ -6,7 +6,7 @@ import BlogPostsPage from './Components/Blog/BlogPostsPage/BlogPostsPage';
 import ReadBlogPost from './Components/Blog/ReadBlogPost/ReadBlogPost';
 import CreateBlog from './Components/Blog/CreateBlog/CreateBlog';
 import Register from './Components/Auth/Register';
-import Login from './Components/Auth/LogIn';
+import Login from './Components/Auth/Login';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import locationStyles from './Components/services/locationStyles/pageWrapper';
@@ -18,7 +18,7 @@ import UserContext from './Components/Contexts/UserContext';
 import TokenContext from './Components/Contexts/TokenContext'
 import useToken from './hooks/useToken';
 
-function App(props) {
+function App({history}) {
 
   const [user, setUser] = useState(undefined);
   const { token, setToken } = useToken();
@@ -32,7 +32,7 @@ function App(props) {
     }
   }, [token])
 
-  const location = props.history.location.pathname;
+  const location = history.location.pathname;
   const setStyles = makeStyles({
     'grid-site-container': locationStyles(location)
   });
@@ -44,9 +44,9 @@ function App(props) {
     return registerUser(e)
       .then(userData => {
         if (userData._id) {
-          setUser(userData)
-          setToken(userData._id)
-          props.history.push(`users/${userData._id}/profile`)
+          setUser(userData);
+          setToken(userData._id);
+          history.push(`users/${userData._id}/profile`)
         }
       })
       .catch(err => err)
@@ -58,9 +58,11 @@ function App(props) {
         if (userData._id) {
           setUser(userData)
           setToken(userData._id)
-          return `Welcome back, ${userData.firstName}`
-        }
-       
+          return {
+            msg: `Welcome back, ${userData.firstName}!`,
+            userId: userData._id
+          }
+        }  
       })
       .catch(err => 'Incorrect username or password')
   }

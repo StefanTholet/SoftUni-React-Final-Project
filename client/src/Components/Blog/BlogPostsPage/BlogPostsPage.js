@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { decodeBlogPost } from '../../services/blogService'
 import UserContext from '../../Contexts/UserContext';
-import TokenContext from '../../Contexts/TokenContext'
+import TokenContext from '../../Contexts/TokenContext';
 const useStyles = makeStyles({
     "blog-posts-container": {
     }
@@ -17,10 +17,11 @@ const useStyles = makeStyles({
 const BlogPostsPage = ({ history }) => {
 
     const [user, setUser] = useContext(UserContext)
+    const [token] = useContext(TokenContext);
     const [blogPosts, setPosts] = useState([]);
 
     useEffect(() => {
-        if (!user) {
+        if (!user && !token) {
             history.push('/login')
         } else {
         getPosts()
@@ -36,13 +37,13 @@ const BlogPostsPage = ({ history }) => {
     }, []);
     const classes = useStyles();
     return (
-        <>
+        <main style={{display: "flex", flexDirection: "column", justifyItems: "center"}}>
             <HeroImage image={'blog.jpg'} />
             <Grid container direction="column" alignItems="center" className={classes['blog-posts-container']}>
                 {blogPosts.map(post => <PostPreviewCard blogData={post} key={post.title + post._id} user={user} setUser={setUser} />
                 )}
             </Grid>
-        </>
+        </main>
     );
 }
 

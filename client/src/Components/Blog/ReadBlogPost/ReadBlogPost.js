@@ -36,7 +36,7 @@ const ReadBlogPost = (props) => {
     return (
         <Grid container justifyContent="middle">
             <HeroImage image={`/blog.jpg`} />
-            <BlogPost post={post} imageUrl={user?.imageUrl} />
+            <BlogPost post={post} user={user} />
             <CommentsSection post={post} user={user} />
         </Grid>
     );

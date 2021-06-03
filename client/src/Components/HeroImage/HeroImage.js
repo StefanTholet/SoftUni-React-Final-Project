@@ -3,15 +3,13 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 const HeroImage = (props) => {
-    const currentLocation = window.location.origin;
     const { image } = props;
     const useStyles = makeStyles({
         root: {
             width: '100%',
-            margin: 'auto',
+            margin: '0 auto',
         },
         media: {
-            // paddingTop: '56.25%',
             width: '90%',
             height: '50vh',
             margin: '0 auto'

@@ -14,17 +14,17 @@ const BlogsInfo = (
     ownBlogDeleteHandler,
     deleteFavoriteHandler
   }) => {
-    
+
   const [favoriteBlogs, setFavoriteBlogs] = useState()
   const { blogPosts: ownBlogs, favoritePosts } = user;
 
   useEffect(() => {
     if (favoritePosts) {
-    getFavouritePosts({ posts: favoritePosts })
-      .then(listOfFavorites => setFavoriteBlogs(listOfFavorites))
+      getFavouritePosts({ posts: favoritePosts })
+        .then(listOfFavorites => setFavoriteBlogs(listOfFavorites))
     }
   }, [user])
-  
+
   return (
     <Grid className="general-info">
       <form>
@@ -38,13 +38,16 @@ const BlogsInfo = (
           {ownBlogs ?
             ownBlogs.map(x => {
               x = decodeBlogPost(x)
-              return <Chip key={x._id + x.title}
+              return <Chip
+                key={x.title + x.author + 1}
                 icon={<MenuBookRoundedIcon />}
                 label={ReactHtmlParser(x.title)} color="primary"
                 variant="outlined"
+                onDelete={ownBlogDeleteHandler}
                 onClick={() => blogBoxClickHandler(x._id)}
-                onDelete={() => ownBlogDeleteHandler(x._id)} />
+              />
             })
+
             : null
           }
         </div>
@@ -55,11 +58,13 @@ const BlogsInfo = (
           {favoriteBlogs ?
             favoriteBlogs.map(x => {
               x = decodeBlogPost(x)
-              return <Chip icon={<FavoriteIcon style={{ color: '#f50057' }} />}
+              return <Chip
+                key={x.title + x.author + 2}
+                icon={<FavoriteIcon style={{ color: '#f50057' }} />}
                 label={ReactHtmlParser(x.title)} color="secondary" variant="outlined"
                 onClick={() => blogBoxClickHandler(x._id)}
                 onDelete={() => deleteFavoriteHandler(x._id)}
-                 />
+              />
             })
             : null
           }

@@ -14,7 +14,7 @@ const TextEditor = ({
 
     return (
         <form onSubmit={onSubmit}
-            style={{ display: 'flex', flexDirection: 'column' }}>
+            style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
             <CKEditor
                 onChange={onTextEditorChange}
                 editor={ClassicEditor}
@@ -40,7 +40,7 @@ const TextEditor = ({
                 variant="outlined"
                 name="imageUrl"
                 id="imageUrl"
-                style={{ maxWidth: '30rem', margin: '0 auto', marginTop: '0.5rem' }} />
+                style={{ maxWidth: '30%', margin: '0 auto', marginTop: '0.5rem' }} />
             <div className='submit-btn-container'>
                 <Button
                     className=".post-btn"

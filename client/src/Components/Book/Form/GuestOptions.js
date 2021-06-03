@@ -8,7 +8,7 @@ import {
 const GuestOptions = () => {
     return (
         <Grid item container className="MuiGrid-spacing-xs-4" justify="center" alignItems="center">
-            <InputLabel item >Guest Types:</InputLabel>
+            <InputLabel>Guest Types:</InputLabel>
             <Grid item>
                 <InputLabel htmlFor="adults">Adults</InputLabel>
                 <Select
@@ -28,7 +28,7 @@ const GuestOptions = () => {
                         name: 'children',
                         id: 'children',
                     }}>
-                    <option defaultValue="none" defaultChecked="true">None</option>
+                    <option defaultValue="none" defaultChecked>None</option>
                     {childrenOptions.map((x, index) => <option key={index} defaultValue={x}>{x}</option>)}
                 </Select>
             </Grid>

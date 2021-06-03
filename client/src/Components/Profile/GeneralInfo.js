@@ -19,8 +19,8 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
             <form onSubmit={submitClickHandler} >
                 <div className="flex-container">
                     <h2>General Information</h2>
-                    <IconButton className="icon-button">
-                        <EditIcon onClick={editClickHandler} />
+                    <IconButton className="icon-button" onClick={editClickHandler}>
+                        <EditIcon />
                     </IconButton>
                 </div>
                 {isEditing ?
@@ -30,7 +30,6 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         label="Avatar Image URL"
                         name="imageUrl"
                         value={imageUrl}
-                        defaultValue=' '
                         variant="outlined"
                         autoFocus
                         style={{ marginBottom: '1rem' }}
@@ -43,7 +42,6 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="First Name"
                         name="firstName"
-                        defaultValue=' '
                         value={firstName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
@@ -53,7 +51,6 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Last Name"
                         name="lastName"
-                        defaultValue=' '
                         value={lastName}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}
@@ -65,7 +62,6 @@ const GeneralInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
                         className="general-info-labels"
                         label="Email Address"
                         name="email"
-                        defaultValue=' '
                         value={email}
                         variant={isEditing ? "outlined" : "standard"}
                         InputProps={!isEditing ? { readOnly: true } : null}

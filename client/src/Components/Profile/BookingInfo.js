@@ -45,8 +45,8 @@ const BookingInfo = ({ user, isEditing, editClickHandler, submitClickHandler }) 
             <form onSubmit={saveNewBookingDetails}>
                 <div className="flex-container">
                     <h2>Your booking information</h2>
-                    <IconButton>
-                        <EditIcon onClick={editClickHandler} />
+                    <IconButton onClick={editClickHandler} >
+                        <EditIcon />
                     </IconButton>
                 </div>
                 <div className="flex-container" style={{ marginTop: '0' }}>

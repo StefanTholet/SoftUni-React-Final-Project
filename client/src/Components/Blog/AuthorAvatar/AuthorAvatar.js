@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 
 const AuthorAvatar = ({ createdOn, author, image }) => {
     const classes = useStyles();
-    
     return (
         <Grid container item className={classes['avatar-container']} xs={12} md={12} >
             <Grid className='avatar'>
